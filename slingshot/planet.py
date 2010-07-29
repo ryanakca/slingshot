@@ -17,8 +17,9 @@
 
 # You should have received a copy of the GNU General Public License along with Slingshot;
 # if not, write to
-# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
+# Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 
 import pygame
 import math
@@ -29,38 +30,48 @@ from settings import *
 from general import *
 
 class Planet(pygame.sprite.Sprite):
-	
-	def __init__(self, planets, background):
+
+	def __init__(self, planets, background, n=None, radius=None, mass=None, pos=None):
 		pygame.sprite.Sprite.__init__(self)
-		unique = False
-		while not unique:
-			unique = True
-			self.n = randint(1, 8)
-			for p in planets:
-				if self.n == p.get_n():
-					unique = False
+
+		if n == None and planets != None:
+			unique = False
+			while not unique:
+				unique = True
+				self.n = randint(1, 8)
+				for p in planets:
+					if self.n == p.get_n():
+						unique = False
+		else:
+			self.n = n
+
 		filename = "data/planet_%d.png" %(self.n)
 		self.orig, self.rect = load_image(filename, (0,0,0))
 		self.image = self.orig
-		
-		positioned = False
-		while not positioned:
-			m = randint(0, (512-8)**2)
-			self.mass = 8 + sqrt(m)
-			self.mass = randint(8,512)
-			self.r = self.mass**(1.0/3.0) * 12.5
-			self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
-			positioned = True
-			for p in planets:
-				d = math.sqrt((self.pos[0] - p.get_pos()[0])**2 + (self.pos[1] - p.get_pos()[1])**2)
-				if d < (self.r + p.get_radius()) * 1.5 + 0.1 * (self.mass + p.get_mass()):
-					positioned = False
-		
-		s = round(2 * self.r / 0.96)
+
+		if radius == None or mass == None or pos == None:
+			positioned = False
+			while not positioned:
+				m = randint(0, (512-8)**2)
+				self.mass = 8 + sqrt(m)
+				self.mass = randint(8,512)
+				self.r = self.mass**(1.0/3.0) * 12.5
+				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
+				positioned = True
+				for p in planets:
+					d = math.sqrt((self.pos[0] - p.get_pos()[0])**2 + (self.pos[1] - p.get_pos()[1])**2)
+					if d < (self.r + p.get_radius()) * 1.5 + 0.1 * (self.mass + p.get_mass()):
+						positioned = False
+		else:
+			self.mass = mass
+			self.r = radius
+			self.pos = pos
+
+		s = int(round(2 * self.r / 0.96))
 		self.orig = pygame.transform.scale(self.image, (s, s))
-		
+
 		self.image = self.orig
-		
+
 		self.rect = self.orig.get_rect()
 		self.rect.center = self.pos
 		tmp = pygame.Surface(background.get_size())
@@ -70,19 +81,19 @@ class Planet(pygame.sprite.Sprite):
 		self.fade_image.blit(tmp, (0,0), rect)
 		self.fade_image.set_alpha(255)
 		self.fade_image.convert()
-		
+
 	def get_n(self):
 		return self.n
-	
+
 	def get_radius(self):
 		return self.r
-		
+
 	def get_mass(self):
 		return self.mass
-	
+
 	def get_pos(self):
 		return self.pos
-	
+
 	def fade(self, f):
 		self.image = self.fade_image
 		self.image.set_alpha(255 - round(f * 2.55))

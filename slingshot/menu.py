@@ -17,15 +17,16 @@
 
 # You should have received a copy of the GNU General Public License along with Slingshot;
 # if not, write to
-# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
+# Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 
 import pygame
 from settings import *
 from general import *
 
 class Menu:
-	
+
 	def __init__(self, name, dim = True):
 		self.reset()
 		self.items = []
@@ -33,78 +34,78 @@ class Menu:
 		self.dim = dim
 		self.count = 0
 		self.inc = 15
-		
+
 	def change_active(self, item, a):
-		for i in range(0, self.items.__len__()):
+		for i in xrange(0, self.items.__len__()):
 			if self.items[i][0] == item:
 				self.items[i] = (self.items[i][0], self.items[i][1], self.items[i][2], a)
-		
+
 	def add(self, item):
 		self.items.append((item, 0, False, True))
-		
+
 	def addoption(self, item, v = False, a = True):
 		self.items.append((item, 1, v, a))
-		
+
 	def up(self):
 		self.selected = self.selected - 1
 		if self.selected < 0:
 			self.selected = self.items.__len__() - 1
 		if self.items[self.selected][3] == False:
 			self.up()
-			
+
 	def left(self):
 		self.up()
-			
+
 	def down(self):
 		self.selected = self.selected + 1
 		if self.selected >= self.items.__len__():
 			self.selected = 0
 		if self.items[self.selected][3] == False:
 			self.down()
-			
+
 	def right(self):
 		self.down()
-			
+
 	def select(self):
 		return self.items[selected][0]
-	
+
 	def reset(self):
 		self.selected = 0
 		self.choice = ""
-	
+
 	def get_width(self):
 		#return 300
 		return 350
-	
+
 	def get_height(self):
 		#n = self.items.__len__()
 		#return 44 * n + 100
 		return 500
-	
+
 	def select(self):
 		if self.items[self.selected][1]:
 			self.items[self.selected] = (self.items[self.selected][0], self.items[self.selected][1], not self.items[self.selected][2], self.items[self.selected][3])
 		self.choice = self.items[self.selected][0]
-		
+
 	def get_choice(self):
 		c = self.choice
 		self.choice = ""
 		return c
-	
+
 	def draw(self):
 		w = self.get_width()
 		h = self.get_height()
 		result = pygame.Surface((w, h))
 		#result.fill((100,0,0))
 		result.blit(Settings.menu_background, (0,0))
-		
+
 		txt = Settings.menu_font.render(self.name, 1, (255,255,255))
 		rect = txt.get_rect()
 		rect.midtop = (w / 2, Settings.MENU_LINEFEED)
 		result.blit(txt, rect.topleft)
-		
+
 		n = self.items.__len__()
-		for i in range(0, n):
+		for i in xrange(0, n):
 			if i == self.selected:
 				color = (self.count,self.count,255)
 			else:
@@ -124,44 +125,56 @@ class Menu:
 			else:
 				offset = 0
 			result.blit(txt, (25 + offset,2.5 * Settings.MENU_LINEFEED + Settings.MENU_LINEFEED * i))
-		
+
 		pygame.draw.rect(result, (0,0,200), pygame.Rect(0, 0, w, h), 1)
-		
+
 		self.count += self.inc
 		if self.count > 255 or self.count < 0:
 			self.inc *= -1
 			self.count += 2* self.inc
-		
+
 		return result
-				
+
 class Help(Menu):
-	
+
 	def __init__(self):
 		Menu.__init__(self, "", False)
 		self.img, rect = load_image("data/help.png", (0,0,0))
 		self.choice = ""
-		
+
 	def select(self):
 		self.choice = "Back"
-	
+
 	def draw(self):
 		return self.img
-	
+
+	def up(self):
+		pass
+
+	def down(self):
+		pass
+
 class Welcome(Menu):
-	
+
 	def __init__(self):
 		Menu.__init__(self, "")
 		self.img, rect = load_image("data/welcome.png", (0,0,0))
 		self.choice = ""
-		
+
 	def select(self):
 		self.choice = "Start"
-	
+
 	def draw(self):
 		return self.img
 
+	def up(self):
+		pass
+
+	def down(self):
+		pass
+
 class Numeric(Menu):
-	
+
 	def __init__(self, txt, init, step, mmax, mmin = 0, inf = "0"):
 		Menu.__init__(self, txt)
 		self.val = init
@@ -170,17 +183,17 @@ class Numeric(Menu):
 		self.mmin = mmin
 		self.inf = inf
 		self.choice = -1
-		
+
 	def up(self):
 		self.val += self.step
 		if self.val > self.mmax:
 			self.val = self.mmax
-	
+
 	def down(self):
 		self.val -= self.step
 		if self.val < self.mmin:
 			self.val = self.mmin
-			
+
 	def select(self):
 		self.choice = self.val
 
@@ -188,19 +201,19 @@ class Numeric(Menu):
 		c = self.choice
 		self.choice = -1
 		return c
-		
+
 	def draw(self):
 		w = self.get_width()
 		h = self.get_height()
 		result = pygame.Surface((w, h))
-		
+
 		result.blit(Settings.menu_background, (0,0))
-		
+
 		txt = Settings.menu_font.render(self.name, 1, (255,255,255))
 		rect = txt.get_rect()
 		rect.midtop = (w / 2, Settings.MENU_LINEFEED)
 		result.blit(txt, rect.topleft)
-		
+
 		if self.val == 0:
 			txt = Settings.menu_font.render(self.inf, 1, (255,255,255))
 		else:
@@ -208,49 +221,49 @@ class Numeric(Menu):
 		rect = txt.get_rect()
 		rect.midtop = (w / 2, 2.5 * Settings.MENU_LINEFEED)
 		result.blit(txt, rect.topleft)
-		
+
 		pygame.draw.rect(result, (0,0,200), pygame.Rect(0, 0, w, h), 1)
-		
+
 		return result
-		
-	
+
+
 class Confirm(Menu):
-	
+
 	def __init__(self, txt1, txt2 = "", txt3 = ""):
 		Menu.__init__(self, "")
 		self.txt1 = txt1
 		self.txt2 = txt2
 		self.txt3 = txt3
-	
+
 	def draw(self):
 		offset = 0
-		
+
 		w = self.get_width()
 		h = self.get_height()
 		result = pygame.Surface((w, h))
 		#result.fill((100,0,0))
 		result.blit(Settings.menu_background, (0,0))
-		
+
 		txt = Settings.menu_font.render(self.txt1, 1, (255,255,255))
 		rect = txt.get_rect()
 		rect.midtop = (w / 2, Settings.MENU_LINEFEED)
 		result.blit(txt, rect.topleft)
-		
+
 		if self.txt2 != "":
 			offset += Settings.MENU_LINEFEED
 			txt = Settings.menu_font.render(self.txt2, 1, (255,255,255))
 			rect = txt.get_rect()
 			rect.midtop = (w / 2, Settings.MENU_LINEFEED + offset)
 			result.blit(txt, rect.topleft)
-		
+
 		if self.txt3 != "":
 			offset += Settings.MENU_LINEFEED
 			txt = Settings.menu_font.render(self.txt3, 1, (255,255,255))
 			rect = txt.get_rect()
 			rect.midtop = (w / 2, Settings.MENU_LINEFEED + offset)
 			result.blit(txt, rect.topleft)
-		
-		for i in range(0, 2):
+
+		for i in xrange(0, 2):
 			if i == self.selected:
 				color = (self.count,self.count,255)
 			else:
@@ -262,13 +275,13 @@ class Confirm(Menu):
 			else:
 				rect.topleft = (w / 2 + Settings.MENU_LINEFEED, 3 * Settings.MENU_LINEFEED + offset)
 			result.blit(txt, rect.topleft)
-		
+
 		pygame.draw.rect(result, (0,0,200), pygame.Rect(0, 0, w, h), 1)
-		
+
 		self.count += self.inc
 		if self.count > 255 or self.count < 0:
 			self.inc *= -1
 			self.count += 2* self.inc
-		
+
 
 		return result

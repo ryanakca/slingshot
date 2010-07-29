@@ -17,8 +17,9 @@
 
 # You should have received a copy of the GNU General Public License along with Slingshot;
 # if not, write to
-# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
+# Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 
 from settings import *
 from general import *
@@ -28,7 +29,7 @@ from math import sqrt
 from random import randint
 
 class Particle(pygame.sprite.Sprite):
-	
+
 	def __init__(self, pos = (0.0, 0.0), size = 10):
 		pygame.sprite.Sprite.__init__(self)
 		if size == 5:
@@ -47,30 +48,30 @@ class Particle(pygame.sprite.Sprite):
 			speed = randint(Settings.PARTICLE_10_MINSPEED,Settings.PARTICLE_10_MAXSPEED)
 		self.v = (0.1 * speed * math.sin(angle), -0.1 * speed * math.cos(angle))
 		self.flight = Settings.MAX_FLIGHT
-		
+
 	def max_flight(self):
 		if self.flight < 0:
 			return True
 		else:
 			return False
-		
+
 	def update(self, planets):
 		self.flight = self.flight - 1
-		
+
 		self.last_pos = self.pos
-		
+
 		for p in planets:
 			p_pos = p.get_pos()
 			mass = p.get_mass()
 			d = (self.pos[0] - p_pos[0])**2 + (self.pos[1] - p_pos[1])**2
 			a = (Settings.g * mass * (self.pos[0] - p_pos[0]) / (d * math.sqrt(d)), Settings.g * mass * (self.pos[1] - p_pos[1]) / (d * math.sqrt(d)))
 			self.v = (self.v[0] - a[0], self.v[1] - a[1])
-			
+
 		self.pos = (self.pos[0] + self.v[0], self.pos[1] + self.v[1])
-		
+
 		if not self.in_range():
 			return 0
-		
+
 		for p in planets:
 			p_pos = p.get_pos()
 			r = p.get_radius()
@@ -79,7 +80,7 @@ class Particle(pygame.sprite.Sprite):
 				self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
 				self.pos = self.impact_pos
 				return 0
-		
+
 		if Settings.BOUNCE:
 			if self.pos[0] > 799:
 				d = self.pos[0] - self.last_pos[0]
@@ -99,28 +100,28 @@ class Particle(pygame.sprite.Sprite):
 				self.v = (self.v[0], -self.v[1])
 #				print self.pos
 #				print self.last_pos
-		
+
 		self.rect.center = (round(self.pos[0]), round(self.pos[1]))
 		return 1
-		
+
 	def in_range(self):
 		if pygame.Rect(-800, -600, 2400, 1800).collidepoint(self.pos):
 			return True
 		else:
 			return False
-		
+
 	def visible(self):
 		if pygame.Rect(0, 0, 800, 600).collidepoint(self.pos):
 			return True
 		else:
 			return False
-	
+
 	def get_pos(self):
 		return self.pos
 
 	def get_impact_pos(self):
 		return self.impact_pos
-	
+
 	def get_size(self):
 		return self.size
 
@@ -132,7 +133,7 @@ class Missile(Particle):
 		self.rect = self.image.get_rect()
 		self.trail_screen = trail_screen
 		self.last_pos = (0.0, 0.0)
-	
+
 	def launch(self, player):
 		self.flight = Settings.MAX_FLIGHT
 		self.pos = player.get_launchpoint()
@@ -140,13 +141,13 @@ class Missile(Particle):
 		angle = math.radians(player.get_angle())
 		self.v = (0.1 * speed * math.sin(angle), -0.1 * speed * math.cos(angle))
 		self.trail_color = player.get_color()
-		
+
 		self.score = -Settings.PENALTY_FACTOR * speed
-	
+
 	def update_players(self, players):
 		result = 1
-		
-		for i in range(10):
+
+		for i in xrange(10):
 			pos = (self.last_pos[0] + i * 0.1 * self.v[0], self.last_pos[1] + i * 0.1 * self.v[1])
 			if players[1].hit(pos):
 				result = 0
@@ -157,7 +158,7 @@ class Missile(Particle):
 				self.pos = pos
 				break
 		return result
-			
+
 	def draw_status(self, screen):
 		txt = Settings.font.render("Power penalty: %d" %(-self.score), 1, (255,255,255))
 		rect = txt.get_rect()
@@ -170,16 +171,16 @@ class Missile(Particle):
 		rect = txt.get_rect()
 		rect.midbottom = (399, 594)
 		screen.blit(txt, rect.topleft)
-		
-		
+
+
 	def update(self, planets, players):
 		result = Particle.update(self, planets)
 		result = result * self.update_players(players)
 		pygame.draw.aaline(self.trail_screen, self.trail_color, self.last_pos, self.pos)
 		return result
-		
+
 	def get_image(self):
 		return self.image
-	
+
 	def get_score(self):
 		return self.score
