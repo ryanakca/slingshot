@@ -39,14 +39,14 @@ import thread
 
 from random import randint
 
-from settings import *
-from general import *
-from player import *
-from planet import *
-from particle import *
-from menu import *
-from network import *
-from inputbox import *
+from slingshot.settings import *
+from slingshot.general import *
+from slingshot.player import *
+from slingshot.planet import *
+from slingshot.particle import *
+from slingshot.menu import *
+from slingshot.network import *
+from slingshot.inputbox import *
 
 class Blackhole(object):
 	softspace = 0

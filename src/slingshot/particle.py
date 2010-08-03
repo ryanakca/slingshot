@@ -21,8 +21,8 @@
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 
-from settings import *
-from general import *
+from slingshot.settings import *
+from slingshot.general import *
 import pygame
 import math
 from math import sqrt

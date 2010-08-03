@@ -24,7 +24,7 @@
 import pygame, string
 
 from pygame.locals import *
-from settings import *
+from slingshot.settings import *
 
 
 class Inputbox:

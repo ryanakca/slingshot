@@ -25,8 +25,8 @@ import pygame
 from random import randint
 
 import math
-from settings import *
-from general import *
+from slingshot.settings import *
+from slingshot.general import *
 
 class Player(pygame.sprite.Sprite):
 

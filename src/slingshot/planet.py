@@ -26,8 +26,8 @@ import math
 from random import randint
 
 from math import sqrt
-from settings import *
-from general import *
+from slingshot.settings import *
+from slingshot.general import *
 
 class Planet(pygame.sprite.Sprite):
 
