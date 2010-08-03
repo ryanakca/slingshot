@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Slingshot
+Name[xx]=xxslingshotxx
+Exec=slingshot
+Icon=slingshot
+Type=Application
+GenericName=2D space shooting game with gravity
+GenericName[fr]=Jeu d'espace 2D avec gravité
+Categories=Game;StrategyGame;
