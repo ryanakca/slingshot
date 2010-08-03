@@ -1,0 +1,82 @@
+Slingshot v0.9
+
+http://www.slingshot-game.org
+
+This package contains the python source which can be executed with the python
+interpreter (also requires python-pygame).
+
+Report any bugs, read the documentation, comment, submit ideas or get involved
+at www.slingshot-game.org
+
+--- Changelog ---
+
+Fixed a small bug which some people experienced where one ship would change
+position to the top left corner of the game screen during play.
+
+--- Requirements ---
+
+python 2.4 (or higher)			http://www.python.org/
+python-pygame 1.7.1 (or higher)		http://www.pygame.org/
+
+
+--- Installation ---
+
+Run:
+python setup.py install
+
+--- Credit/Contact ---
+
+Slingshot was created by Jonathan Musther and Bart Mak.
+Visit www.slingshot-game.org
+E-mail jon@slingshot-game.org
+
+It was later extended in 2009 by Marcus Dreier <m-rei@gmx.net>. He:
+ - Added network support
+ - Fixed crashing when pressing cursors at welcome and help screen
+ - Added fine adjustments for all keyboard bindings (shift, ctrl, alt)
+ - Replaced the deprecated range function with xrange
+ - Removed some of pygame's deprecation warnings
+ - Switched to a more consistent code format
+
+The original slingshot authors are missing and the original website has
+disappeared. Slingshot is currently maintained by Ryan Kavanagh
+<ryanakca@kubuntu.org>. If someone is interested in taking over upstream
+maintainership and give slingshot some love, please feel free.
+
+
+--- Copyright/Licensing ---
+
+Slingshot is a two-dimensional strategy game where two players attempt to shoot
+one another through a section of space populated by planets.  The main feature
+of the game is that the shots, once fired, are affected by the gravity of the
+planets.
+
+Copyright:
+
+    Slingshot itself:
+      Copyright (C) 2007 Jonathan Musther
+      Copyright (C) 2007 Bart Mak
+      Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+    slingshot/data/FreeSansBold.ttf:
+      Copyright (C) 2002, 2003, 2005, 2008 Free Software Foundation
+    Misc. changes:
+      Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
+
+License:
+
+    Slingshot is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    Slingshot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Slingshot; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+On Debian systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL-2'.
