@@ -1,17 +1,16 @@
 Slingshot v0.9
 
-http://www.slingshot-game.org
+http://github.com/ryanakca/slingshot
 
 This package contains the python source which can be executed with the python
 interpreter (also requires python-pygame).
 
 Report any bugs, read the documentation, comment, submit ideas or get involved
-at www.slingshot-game.org
+at http://github.com/ryanakca/slingshot
 
 --- Changelog ---
 
-Fixed a small bug which some people experienced where one ship would change
-position to the top left corner of the game screen during play.
+See http://github.com/ryanakca/slingshot/commits/master
 
 --- Requirements ---
 
@@ -27,8 +26,8 @@ python setup.py install
 --- Credit/Contact ---
 
 Slingshot was created by Jonathan Musther and Bart Mak.
-Visit www.slingshot-game.org
-E-mail jon@slingshot-game.org
+The old website used to be www.slingshot-game.org
+The old email used to be jon@slingshot-game.org
 
 It was later extended in 2009 by Marcus Dreier <m-rei@gmx.net>. He:
  - Added network support
@@ -40,7 +39,7 @@ It was later extended in 2009 by Marcus Dreier <m-rei@gmx.net>. He:
 
 The original slingshot authors are missing and the original website has
 disappeared. Slingshot is currently maintained by Ryan Kavanagh
-<ryanakca@kubuntu.org>. If someone is interested in taking over upstream
+<ryanakca@kubuntu.org>. If someone is interested in helping with upstream
 maintainership and give slingshot some love, please feel free.
 
 
@@ -57,10 +56,9 @@ Copyright:
       Copyright (C) 2007 Jonathan Musther
       Copyright (C) 2007 Bart Mak
       Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+      Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
     slingshot/data/FreeSansBold.ttf:
       Copyright (C) 2002, 2003, 2005, 2008 Free Software Foundation
-    Misc. changes:
-      Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 License:
 
