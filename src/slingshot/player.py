@@ -20,6 +20,7 @@
 # the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 import pygame
 from random import randint
@@ -41,11 +42,11 @@ class Player(pygame.sprite.Sprite):
 		self.shot = False
 		self.attempts = 0
 		self.e = 0
-		self.exp, self.rect = load_image("data/explosion.png", (0,0,0))
+		self.exp, self.rect = load_image("explosion.png", (0,0,0))
 
 		if self.player == 1:
 			self.angle = 90
-			self.orig, self.rect = load_image("data/red_ship.png", (0,0,0))
+			self.orig, self.rect = load_image("red_ship.png", (0,0,0))
 			self.color = (209,170,133)
 			self.rect = pygame.Rect(0,0,40,33)
 			if y_coord == None:
@@ -56,7 +57,7 @@ class Player(pygame.sprite.Sprite):
 			self.image = self.orig.subsurface(0, 0, 40, 33)
 		elif self.player == 2:
 			self.angle = 270
-			self.orig, self.rect = load_image("data/blue_ship.png", (0,0,0))
+			self.orig, self.rect = load_image("blue_ship.png", (0,0,0))
 			self.color = (132,152,192)
 			self.rect = pygame.Rect(0,0,40,33)
 			if y_coord == None:

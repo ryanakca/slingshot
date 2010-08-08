@@ -20,6 +20,9 @@
 # the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
+
+import os.path
 
 class Settings:
 
@@ -64,3 +67,5 @@ class Settings:
 	MENU_LINEFEED = 36
 
 	MAX_ROUNDS = 0
+
+        DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')

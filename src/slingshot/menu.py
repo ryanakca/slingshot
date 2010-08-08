@@ -20,6 +20,7 @@
 # the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 import pygame
 from slingshot.settings import *
@@ -139,7 +140,7 @@ class Help(Menu):
 
 	def __init__(self):
 		Menu.__init__(self, "", False)
-		self.img, rect = load_image("data/help.png", (0,0,0))
+		self.img, rect = load_image("help.png", (0,0,0))
 		self.choice = ""
 
 	def select(self):
@@ -158,7 +159,7 @@ class Welcome(Menu):
 
 	def __init__(self):
 		Menu.__init__(self, "")
-		self.img, rect = load_image("data/welcome.png", (0,0,0))
+		self.img, rect = load_image("welcome.png", (0,0,0))
 		self.choice = ""
 
 	def select(self):

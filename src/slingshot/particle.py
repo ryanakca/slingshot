@@ -20,6 +20,7 @@
 # the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 from slingshot.settings import *
 from slingshot.general import *
@@ -129,7 +130,7 @@ class Missile(Particle):
 
 	def __init__(self, trail_screen):
 		Particle.__init__(self) #call Sprite intializer
-		self.image, self.rect = load_image("data/shot.png", (0,0,0))
+		self.image, self.rect = load_image("shot.png", (0,0,0))
 		self.rect = self.image.get_rect()
 		self.trail_screen = trail_screen
 		self.last_pos = (0.0, 0.0)

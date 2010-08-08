@@ -28,6 +28,7 @@
 # This code lacks a good structure and comments.
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 import pygame
 from pygame.locals import *
@@ -59,9 +60,9 @@ class Game:
 	particle_image_rect = None
 
 	pygame.font.init()
-	Settings.font = pygame.font.Font("data/FreeSansBold.ttf", 14)
-	Settings.menu_font = pygame.font.Font("data/FreeSansBold.ttf", Settings.MENU_FONT_SIZE)
-	Settings.round_font = pygame.font.Font("data/FreeSansBold.ttf", 100)
+	Settings.font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 14)
+	Settings.menu_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), Settings.MENU_FONT_SIZE)
+	Settings.round_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 100)
 
 	def __init__(self):
 		pygame.display.init()
@@ -69,17 +70,17 @@ class Game:
 		self.clock = pygame.time.Clock()
 
 		self.screen = pygame.display.set_mode((800, 600))
-		icon, rect = load_image("data/icon64x64.png", (0,0,0))
+		icon, rect = load_image("icon64x64.png", (0,0,0))
 		pygame.display.set_icon(icon)
 		pygame.display.set_caption('Slingshot')
 
-		Settings.particle_image10, Settings.particle_image10_rect = load_image("data/explosion-10.png", (0,0,0))
-		Settings.particle_image5, Settings.particle_image5_rect = load_image("data/explosion-5.png", (0,0,0))
+		Settings.particle_image10, Settings.particle_image10_rect = load_image("explosion-10.png", (0,0,0))
+		Settings.particle_image5, Settings.particle_image5_rect = load_image("explosion-5.png", (0,0,0))
 
-		Settings.menu_background, Settings.menu_rect = load_image("data/menu.png", (0,0,0))
-		Settings.box, rect = load_image("data/box.png", (0,0,0))
-		Settings.tick, rect = load_image("data/tick.png", (0,0,0))
-		Settings.tick_inactive, rect = load_image("data/tick_inactive.png", (0,0,0))
+		Settings.menu_background, Settings.menu_rect = load_image("menu.png", (0,0,0))
+		Settings.box, rect = load_image("box.png", (0,0,0))
+		Settings.tick, rect = load_image("tick.png", (0,0,0))
+		Settings.tick_inactive, rect = load_image("tick_inactive.png", (0,0,0))
 
 		self.trail_screen = pygame.Surface(self.screen.get_size())
 		self.trail_screen = self.trail_screen.convert()
@@ -95,7 +96,7 @@ class Game:
 		self.dim_screen = self.dim_screen.convert_alpha()
 		#self.dim_screen.fill((0,0,0))
 
-		self.background, r = load_image("data/backdrop.png")
+		self.background, r = load_image("backdrop.png")
 
 		self.players = (Dummy(), Player(1), Player(2))
 		self.playersprites = pygame.sprite.RenderPlain((self.players[1], self.players[2]))

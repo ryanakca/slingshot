@@ -45,7 +45,7 @@ class Planet(pygame.sprite.Sprite):
 		else:
 			self.n = n
 
-		filename = "data/planet_%d.png" %(self.n)
+		filename = get_data_path("planet_%d.png" % (self.n))
 		self.orig, self.rect = load_image(filename, (0,0,0))
 		self.image = self.orig
 

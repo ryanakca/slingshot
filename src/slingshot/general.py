@@ -20,14 +20,17 @@
 # the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 import pygame
 from pygame.locals import *
 from math import sqrt
+import os.path
+
+from slingshot.settings import Settings
 
 def load_image(name, colorkey=None):
-    #fullname = os.path.join('data', name)
-	fullname = name
+        fullname = os.path.join(Settings.DATA_PATH, name)
 	try:
 		image = pygame.image.load(fullname)
 	except pygame.error, message:
@@ -82,3 +85,6 @@ def get_intersect(center, r, pos1, pos2):
 	pos = (px + alpha * dx, py + alpha * dy)
 #	print pos
 	return pos
+
+def get_data_path(file):
+        return os.path.join(Settings.DATA_PATH, file)
