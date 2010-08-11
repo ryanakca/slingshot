@@ -109,6 +109,9 @@ class Game:
 
 		self.load_settings()
 
+                if self.fullscreen:
+                    self.use_fullscreen()
+
 		#self.fixed_power = Settings.FIXED_POWER
 		#self.bounce = Settings.BOUNCE
 		#self.invisible = Settings.INVISIBLE
@@ -173,6 +176,7 @@ class Game:
 
 		self.graphics_menu = Menu("Graphics")
 		self.graphics_menu.add("Particles")
+                self.graphics_menu.add("Full Screen")
 
 		self.planet_menu = Numeric("Maximum number of planets", self.max_planets, 1, 8, 2)
 
@@ -180,6 +184,11 @@ class Game:
 		self.particles_menu.add("Back")
 		self.particles_menu.add("On")
 		self.particles_menu.add("Off")
+
+                self.fullscreen_menu = Menu("Full Screen")
+                self.fullscreen_menu.add("Back")
+                self.fullscreen_menu.add("On")
+                self.fullscreen_menu.add("Off")
 
 		self.rounds_menu = Numeric("Number of rounds", self.max_rounds, 1, 100, 0, "Infinite")
 
@@ -223,6 +232,8 @@ class Game:
 			result = True
 		if Settings.RANDOM != self.random:
 			result = True
+                if Settings.FULLSCREEN != self.fullscreen:
+                        result = True
 
 		return result
 
@@ -312,6 +323,8 @@ class Game:
 			self.menu = None
 		elif self.menu == self.particles_menu:
 			self.menu = self.graphics_menu
+                elif self.menu == self.fullscreen_menu:
+                        self.menu = self.graphics_menu
 		elif self.menu == self.rounds_menu:
 			self.menu = self.mode_menu
 		elif self.menu == self.planet_menu:
@@ -549,7 +562,23 @@ class Game:
 			if c >= 0:
 				self.timeout = c
 				self.toggle_menu()
-		if c == "Quit":
+                if self.menu == self.particles_menu:
+                        if c == "On":
+                                Settings.PARTICLES = True
+                                self.toggle_menu()
+                        if c == "Off":
+                                Settings.PARTICLES = False
+                                self.toggle_menu()
+                if self.menu == self.fullscreen_menu:
+                        if c == "On":
+                                self.fullscreen = True
+                                self.use_fullscreen()
+                                self.toggle_menu()
+                        if c == "Off":
+                                self.fullscreen = False
+                                self.use_window()
+                                self.toggle_menu()
+                if c == "Quit":
 			self.q = True
 		elif c == "Back":
 			self.toggle_menu()
@@ -612,12 +641,8 @@ class Game:
 			self.menu = self.planet_menu
 		elif c == "Particles":
 			self.menu = self.particles_menu
-		elif c == "On":
-			Settings.PARTICLES = True
-			self.toggle_menu()
-		elif c == "Off":
-			Settings.PARTICLES = False
-			self.toggle_menu()
+                elif c == "Full Screen":
+                        self.menu = self.fullscreen_menu
 
 	def update(self):
 		self.update_particles()
@@ -861,6 +886,7 @@ class Game:
 		self.max_planets = Settings.MAX_PLANETS
 		self.timeout = Settings.MAX_FLIGHT
 		self.max_rounds = Settings.MAX_ROUNDS
+                self.fullscreen = Settings.FULLSCREEN
 
 		path = os.path.expanduser("~") + "/.slingshot/settings"
 
@@ -878,6 +904,9 @@ class Game:
 				elif tokens[0] == "Particles:":
 					if tokens[1] == "1":
 						Settings.PARTICLES = True
+                                elif tokens[0] == "Fullscreen:":
+                                        if tokens[1] == "1":
+                                                self.fullscreen = True
 				elif tokens[0] == "Random:":
 					if tokens[1] == "1":
 						self.random = True
@@ -919,6 +948,10 @@ class Game:
 			f.write("Particles: 1\n")
 		else:
 			f.write("Particles: 0\n")
+                if self.fullscreen:
+                        f.write("Fullscreen: 1\n")
+                else:
+                        f.write("Fullscreen: 0\n")
 		f.write("Max_Planets: %d\n" %(self.max_planets))
 		f.write("Timeout: %d\n" %(self.timeout))
 		f.write("Rounds: %d\n" %(self.max_rounds))
@@ -1047,6 +1080,12 @@ class Game:
 			self.menu = self.net_error_menu
 			self.net.close()
 		return ret
+
+        def use_fullscreen(self):
+                pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.NOFRAME)
+
+        def use_window(self):
+                pygame.display.set_mode((800, 600))
 
 def main():
 

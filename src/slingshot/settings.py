@@ -69,3 +69,5 @@ class Settings:
 	MAX_ROUNDS = 0
 
         DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
+
+        FULLSCREEN = False
