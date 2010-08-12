@@ -46,13 +46,13 @@ class Settings:
 	FIXED_POWER = False
 	PARTICLES = True
 	INVISIBLE = False
-        BLACKHOLES = False
 	RANDOM = False
 	POWER = 200
 
 	MAX_FLIGHT = 750
 
 	MAX_PLANETS = 4
+        MAX_BLACKHOLES = 0
 
 	HITSCORE = 1500
 	SELFHIT = 2000
