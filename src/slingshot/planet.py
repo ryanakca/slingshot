@@ -35,6 +35,8 @@ class Planet(pygame.sprite.Sprite):
 	def __init__(self, planets, background, n=None, radius=None, mass=None, pos=None):
 		pygame.sprite.Sprite.__init__(self)
 
+                self.type = "Planet"
+
 		if n == None and planets != None:
 			unique = False
 			while not unique:
@@ -54,7 +56,7 @@ class Planet(pygame.sprite.Sprite):
 			positioned = False
 			while not positioned:
 				self.mass = randint(8,512)
-				self.r = self.mass**(1.0/3.0) * 12.5
+				self.r = self.mass**(1.0/3.0) * 12.5 # radius
 				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
 				positioned = True
 				for p in planets:
@@ -104,3 +106,62 @@ class Planet(pygame.sprite.Sprite):
 #			pygame.draw.circle(self.image, (0,0,0,0), (randint(r, round(2 * self.r) - r), randint(r, round(2 * self.r) - r)), r)
 #			for j in range(0, self.r):
 #				self.image.set_at((randint(0, round(self.r * 2)), randint(0, round(self.r * 2))), (0,0,0,0))
+
+class Blackhole(Planet):
+        def __init__(self, planets, background, n=None, radius=None, mass=None, pos=None):
+		pygame.sprite.Sprite.__init__(self)
+
+                self.type = "Blackhole"
+
+                self.image = pygame.surface.Surface((2, 2))
+                #self.image.set_alpha(0)
+                self.image.set_alpha(255)
+                self.image.fill((255, 0, 0))
+                self.rect = self.image.get_rect()
+
+		if n == None and planets != None:
+			unique = False
+			while not unique:
+				unique = True
+				self.n = randint(1, 8)
+				for p in planets:
+					if self.n == p.get_n():
+						unique = False
+		else:
+			self.n = n
+
+		if radius == None or mass == None or pos == None:
+			positioned = False
+			while not positioned:
+				self.mass = randint(700, 1000)
+				self.r = 1 # radius
+                                # x: random integer between (the minimum distance
+                                # between a planet and the edge of the screen +
+                                # our radius rounded up) and (the same distance
+                                # from the bottom of the screen)
+                                # y: same thing, except from the sides.
+				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
+				positioned = True
+				for p in planets:
+					d = math.sqrt((self.pos[0] - p.get_pos()[0])**2 + (self.pos[1] - p.get_pos()[1])**2)
+					if d < (self.r + p.get_radius()) * 1.5 + 0.1 * (self.mass + p.get_mass()):
+						positioned = False
+                                                print "FAIL!"
+		else:
+			self.mass = mass
+			self.r = radius
+			self.pos = pos
+
+                self.orig = self.image
+                self.rect = self.orig.get_rect()
+		self.rect.center = self.pos
+		tmp = pygame.Surface(background.get_size())
+		tmp.blit(background, (0,0))
+		rect = tmp.blit(self.orig, self.rect.topleft)
+		self.fade_image = pygame.Surface(self.orig.get_size())
+		self.fade_image.blit(tmp, (0,0), rect)
+		self.fade_image.set_alpha(255)
+		self.fade_image.convert()
+
+
+                print "Blackhole!"
