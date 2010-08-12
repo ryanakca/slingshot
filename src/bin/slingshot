@@ -122,7 +122,7 @@ class Game:
 		#self.max_planets = Settings.MAX_PLANETS
 		#self.max_rounds = Settings.MAX_ROUNDS
 
-		self.main_menu = Menu("Menu")
+		self.main_menu = Menu("Menu", copyright=True)
 		self.main_menu.add("Back to game")
 		self.main_menu.add("New game")
 		self.main_menu.add("New network game")

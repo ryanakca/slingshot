@@ -28,13 +28,14 @@ from slingshot.general import *
 
 class Menu:
 
-	def __init__(self, name, dim = True):
+	def __init__(self, name, dim = True, copyright = False):
 		self.reset()
 		self.items = []
 		self.name = name
 		self.dim = dim
 		self.count = 0
 		self.inc = 15
+                self.copyright = copyright
 
 	def change_active(self, item, a):
 		for i in xrange(0, self.items.__len__()):
@@ -99,7 +100,8 @@ class Menu:
 		result = pygame.Surface((w, h))
 		#result.fill((100,0,0))
 		result.blit(Settings.menu_background, (0,0))
-                for line, (x, y) in prep_text([
+                if self.copyright:
+                        for line, (x, y) in prep_text([
 "Slingshot is:",
 "    Copyright (C) 2007 Jonathan Musther <jmusther@gmail.com>",
 "    Copyright (C) 2007 Bart Mak",
@@ -122,9 +124,9 @@ class Menu:
 "",
 "http://github.com/ryanakca/slingshot"],
                                 True, Settings.fineprint, 0, (10, 10, 10)):
-                        # We want our text to start at 20px from the left side
-                        # and 305 px from the top.
-                        result.blit(line, (20, 305 + y))
+                            # We want our text to start at 20px from the left
+                            # side and 305 px from the top.
+                            result.blit(line, (20, 305 + y))
 
 		txt = Settings.menu_font.render(self.name, 1, (255,255,255))
 		rect = txt.get_rect()
