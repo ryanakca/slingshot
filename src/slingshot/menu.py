@@ -127,6 +127,10 @@ class Menu:
                             # We want our text to start at 20px from the left
                             # side and 305 px from the top.
                             result.blit(line, (20, 305 + y))
+                version = Settings.fineprint.render(
+                        'Version '+ Settings.VERSION, True,
+                                                    (230, 230, 230))
+                result.blit(version, (345 - version.get_width(), 3))
 
 		txt = Settings.menu_font.render(self.name, 1, (255,255,255))
 		rect = txt.get_rect()

@@ -26,6 +26,8 @@ import os.path
 
 class Settings:
 
+        VERSION = '0.9 (unreleased)'
+
 	g = 120 # gravity
 	MAXPOWER = 350
 	PLANET_SHIP_DISTANCE = 75 # this is actually the distance towards the edge left and right
