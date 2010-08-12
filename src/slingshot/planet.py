@@ -20,6 +20,7 @@
 # the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
+# Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
 import pygame
 import math
@@ -52,8 +53,6 @@ class Planet(pygame.sprite.Sprite):
 		if radius == None or mass == None or pos == None:
 			positioned = False
 			while not positioned:
-				m = randint(0, (512-8)**2)
-				self.mass = 8 + sqrt(m)
 				self.mass = randint(8,512)
 				self.r = self.mass**(1.0/3.0) * 12.5
 				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
