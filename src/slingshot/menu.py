@@ -99,6 +99,32 @@ class Menu:
 		result = pygame.Surface((w, h))
 		#result.fill((100,0,0))
 		result.blit(Settings.menu_background, (0,0))
+                for line, (x, y) in prep_text([
+"Slingshot is:",
+"    Copyright (C) 2007 Jonathan Musther <jmusther@gmail.com>",
+"    Copyright (C) 2007 Bart Mak",
+"    Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>",
+"    Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>",
+"",
+"Slingshot is free software; you can redistribute it and/or modify",
+"it under the terms of the GNU General Public License as published by",
+"the Free Software Foundation; either version 2 of the License, or",
+"(at your option) any later version.",
+"",
+"Slingshot is distributed in the hope that it will be useful,",
+"but WITHOUT ANY WARRANTY; without even the implied warranty of",
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+"GNU General Public License for more details.",
+"",
+"You should have received a copy of the GNU General Public License",
+"along with Slingshot; if not, write to the Free Software",
+"Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA",
+"",
+"http://github.com/ryanakca/slingshot"],
+                                True, Settings.fineprint, 0, (10, 10, 10)):
+                        # We want our text to start at 20px from the left side
+                        # and 305 px from the top.
+                        result.blit(line, (20, 305 + y))
 
 		txt = Settings.menu_font.render(self.name, 1, (255,255,255))
 		rect = txt.get_rect()

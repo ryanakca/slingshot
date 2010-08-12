@@ -64,6 +64,7 @@ class Game:
 	Settings.font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 14)
 	Settings.menu_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), Settings.MENU_FONT_SIZE)
 	Settings.round_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 100)
+        Settings.fineprint = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 8)
 
 	def __init__(self):
 		pygame.display.init()
