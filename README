@@ -23,11 +23,13 @@ python-pygame 1.7.1 (or higher)		http://www.pygame.org/
 Run:
 python setup.py install
 
---- Credit/Contact ---
+--- Credit/History/Contact ---
 
 Slingshot was created by Jonathan Musther and Bart Mak.
 The old website used to be www.slingshot-game.org
-The old email used to be jon@slingshot-game.org
+
+Slingshot was unmaintained by 2008 and the old website had disappeared by
+2008/2009.
 
 It was later extended in 2009 by Marcus Dreier <m-rei@gmx.net>. He:
  - Added network support
@@ -37,10 +39,9 @@ It was later extended in 2009 by Marcus Dreier <m-rei@gmx.net>. He:
  - Removed some of pygame's deprecation warnings
  - Switched to a more consistent code format
 
-The original slingshot authors are missing and the original website has
-disappeared. Slingshot is currently maintained by Ryan Kavanagh
-<ryanakca@kubuntu.org>. If someone is interested in helping with upstream
-maintainership and give slingshot some love, please feel free.
+Slingshot is currently maintained by Ryan Kavanagh <ryanakca@kubuntu.org>. If
+someone is interested in helping with upstream maintainership and give slingshot
+some love, please feel free.
 
 
 --- Copyright/Licensing ---
@@ -53,7 +54,7 @@ planets.
 Copyright:
 
     Slingshot itself:
-      Copyright (C) 2007 Jonathan Musther
+      Copyright (C) 2007 Jonathan Musther <jmusther@gmail.com>
       Copyright (C) 2007 Bart Mak
       Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
       Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
