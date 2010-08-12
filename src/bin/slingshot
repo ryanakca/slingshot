@@ -166,6 +166,7 @@ class Game:
 		self.style_menu.addoption("Fixed power", self.fixed_power, not self.random)
 		self.style_menu.addoption("Bounce", self.bounce, not self.random)
 		self.style_menu.addoption("Invisible planets", self.invisible, not self.random)
+                self.style_menu.addoption("Black holes", self.blackholes, not self.random)
 
 		self.mode_menu = Menu("Game options")
 		self.mode_menu.add("Back")
@@ -227,6 +228,8 @@ class Game:
 			result = True
 		if Settings.INVISIBLE != self.invisible:
 			result = True
+                if Settings.BLACKHOLES != self.blackholes:
+                        result = True
 		if Settings.FIXED_POWER != self.fixed_power:
 			result = True
 		if Settings.MAX_ROUNDS != self.max_rounds:
@@ -242,6 +245,7 @@ class Game:
 		Settings.MAX_PLANETS = self.max_planets
 		Settings.BOUNCE = self.bounce
 		Settings.INVISIBLE = self.invisible
+                Settings.BLACKHOLES = self.blackholes
 		Settings.FIXED_POWER = self.fixed_power
 		Settings.MAX_ROUNDS = self.max_rounds
 		Settings.RANDOM = self.random
@@ -274,6 +278,7 @@ class Game:
 			Settings.BOUNCE = (randint(0,1) == 1)
 			Settings.FIXED_POWER = (randint(0,1) == 1)
 			Settings.INVISIBLE = (randint(0,1) == 1)
+                        Settings.BLACKHOLES = (randint(0,1) == 1)
 
 		self.round_over = False
 
@@ -638,6 +643,8 @@ class Game:
 			self.bounce = not self.bounce
 		elif c == "Invisible planets":
 			self.invisible = not self.invisible
+                elif c == "Black holes":
+                        self.blackholes = not self.blackholes
 		elif c == "Max number of planets":
 			self.menu = self.planet_menu
 		elif c == "Particles":
@@ -883,6 +890,7 @@ class Game:
 		self.bounce = Settings.BOUNCE
 		self.fixed_power = Settings.FIXED_POWER
 		self.invisible = Settings.INVISIBLE
+                self.blackholes = Settings.BLACKHOLES
 		self.random = Settings.RANDOM
 		self.max_planets = Settings.MAX_PLANETS
 		self.timeout = Settings.MAX_FLIGHT
@@ -914,6 +922,9 @@ class Game:
 				elif tokens[0] == "Invisible:":
 					if tokens[1] == "1":
 						self.invisible = True
+                                elif tokens[0] == "Black_holes:":
+                                        if tokens[1] == "1":
+                                                self.blackholes = True
 				elif tokens[0] == "Max_Planets:":
 					self.max_planets = int(tokens[1])
 				elif tokens[0] == "Timeout:":
@@ -941,6 +952,10 @@ class Game:
 			f.write("Invisible: 1\n")
 		else:
 			f.write("Invisible: 0\n")
+                if self.blackholes:
+                        f.write("Black_holes: 1\n")
+                else:
+                        f.write("Black_holes: 0\n")
 		if self.random:
 			f.write("Random: 1\n")
 		else:

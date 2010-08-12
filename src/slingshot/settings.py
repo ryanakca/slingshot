@@ -46,6 +46,7 @@ class Settings:
 	FIXED_POWER = False
 	PARTICLES = True
 	INVISIBLE = False
+        BLACKHOLES = False
 	RANDOM = False
 	POWER = 200
 
