@@ -88,3 +88,30 @@ def get_intersect(center, r, pos1, pos2):
 
 def get_data_path(file):
         return os.path.join(Settings.DATA_PATH, file)
+
+def prep_text(text, antialias, font, linespacing, color):
+        '''
+        Let's make it easy to draw text.
+
+        Input:
+          text: a list of lines to print.
+          antialias: Bool that controls antialiasing
+          font: An initialized pygames.font.Font object
+          linespacing: the number of pixels between lines
+          color: (R, G, B)
+        Output:
+          A list of tuples in the format:
+          (surface, (line width, distance between the top of the first line
+          and the top of this line))
+        '''
+        text_surfaces = []
+        text_height = 0
+        for line in text:
+                rendered_text = font.render(line, antialias, color)
+                text_surfaces.append((rendered_text,
+                            (rendered_text.get_width(), text_height)
+                                    ))
+                # So that we place the next line directly under this one:
+                text_height += rendered_text.get_height()
+                text_height += linespacing
+        return text_surfaces
