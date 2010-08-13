@@ -375,14 +375,16 @@ class Game:
 		result = pygame.sprite.RenderPlain()
 
 		if planetlist == None:
-			n = randint(2, Settings.MAX_PLANETS)
-			for i in xrange(n):
-				result.add(Planet(result, self.background))
                         if Settings.MAX_BLACKHOLES > 0:
                                 n = randint(1, Settings.MAX_BLACKHOLES)
-                                n = 3 # RK
                                 for i in xrange(n):
                                         result.add(Blackhole(result, self.background))
+                        else:
+                                # Only have planets if we don't have any
+                                # blackholes.
+                                n = randint(2, Settings.MAX_PLANETS)
+                                for i in xrange(n):
+                                        result.add(Planet(result, self.background))
 		else:
 			for p in planetlist:
                                 if p.type == "Planet":
@@ -670,13 +672,18 @@ class Game:
 			self.firing = self.missile.update(self.planetsprites, self.players)
 			if self.missile.flight < 0 and not self.missile.visible():
 				self.firing = 0
-			if not self.firing:
-				if self.missile.visible():
+                        if self.firing <= 0:
+                                # Collision between missile and planet (0) or
+                                # a black hole (-1).
+                                #
+                                # Don't create any particles when we hit a black
+                                # hole, the missile got sucked up.
+                                if self.firing == 0 and self.missile.visible():
 					self.create_particlesystem(self.missile.get_impact_pos(), Settings.n_PARTICLES_10, 10)
-				self.end_shot()
+                                self.end_shot()
 
-				if self.net_play() and not self.active_net_player():
-					thread.start_new_thread(self.thread_job,())
+                                if self.net_play() and not self.active_net_player():
+                                        thread.start_new_thread(self.thread_job,())
 
 		if not self.menu == None:
 			self.menu_action()

@@ -200,6 +200,7 @@ class Player(pygame.sprite.Sprite):
 			self.rect.center = pos
 
 	def draw_line(self, screen):
+                ''' Draws the aiming line out of the ship's gun. '''
 		(sx,sy) = self.get_launchpoint()
 
 		pygame.draw.aaline(screen, self.color, (sx,sy), (sx + self.power * math.sin(math.radians(self.angle)), sy - self.power * math.cos(math.radians(self.angle))))
