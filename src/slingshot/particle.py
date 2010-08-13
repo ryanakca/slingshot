@@ -32,6 +32,7 @@ from random import randint
 class Particle(pygame.sprite.Sprite):
 
 	def __init__(self, pos = (0.0, 0.0), size = 10):
+                ''' Initialize the particle. '''
 		pygame.sprite.Sprite.__init__(self)
 		if size == 5:
 			self.image = Settings.particle_image5
@@ -47,6 +48,7 @@ class Particle(pygame.sprite.Sprite):
 			speed = randint(Settings.PARTICLE_5_MINSPEED,Settings.PARTICLE_5_MAXSPEED)
 		else:
 			speed = randint(Settings.PARTICLE_10_MINSPEED,Settings.PARTICLE_10_MAXSPEED)
+                # (x velocity, y velocity)
 		self.v = (0.1 * speed * math.sin(angle), -0.1 * speed * math.cos(angle))
 		self.flight = Settings.MAX_FLIGHT
 
@@ -57,6 +59,18 @@ class Particle(pygame.sprite.Sprite):
 			return False
 
 	def update(self, planets):
+                """
+                Updates information about ourselves, namely our location.
+
+                @param planets: list of planets
+                @type planets: [Planet]
+
+                @return: -1 if we've hit a black hole
+                          0 if we've hit a planet
+                          1 otherwise
+                @rtype: int
+
+                """
 		self.flight = self.flight - 1
 
 		self.last_pos = self.pos
@@ -77,10 +91,20 @@ class Particle(pygame.sprite.Sprite):
 			p_pos = p.get_pos()
 			r = p.get_radius()
 			d = (self.pos[0] - p_pos[0])**2 + (self.pos[1] - p_pos[1])**2
-			if d <= (r)**2:
-				self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
-				self.pos = self.impact_pos
-				return 0
+                        if p.type == "Blackhole":
+                                if r < 22.37:
+                                        min_dist = 500
+                                else:
+                                        min_dist = r**2
+                                if d <= min_dist:
+                                        self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
+                                        self.pos = self.impact_pos
+                                        return -1
+                        elif d <= (r)**2:
+                                # This is a planet
+                                self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
+                                self.pos = self.impact_pos
+                                return 0
 
 		if Settings.BOUNCE:
 			if self.pos[0] > 799:
@@ -112,6 +136,10 @@ class Particle(pygame.sprite.Sprite):
 			return False
 
 	def visible(self):
+                """
+                Returns whether or not the particle is within the playing area.
+
+                """
 		if pygame.Rect(0, 0, 800, 600).collidepoint(self.pos):
 			return True
 		else:
@@ -177,7 +205,9 @@ class Missile(Particle):
 	def update(self, planets, players):
 		result = Particle.update(self, planets)
 		result = result * self.update_players(players)
-		pygame.draw.aaline(self.trail_screen, self.trail_color, self.last_pos, self.pos)
+                # Draws the missile's trajectory only if we haven't entered a black hole.
+                if result != -1:
+                        pygame.draw.aaline(self.trail_screen, self.trail_color, self.last_pos, self.pos)
 		return result
 
 	def get_image(self):
