@@ -387,7 +387,7 @@ class Game:
                                         result.add(Planet(result, self.background))
 		else:
 			for p in planetlist:
-                                if p.type == "Planet":
+                                if p[7] == "Planet":
                                         result.add(Planet(None, self.background, p[0], p[1], p[2], p[3]))
                                 else:
                                         result.add(Blackhole(None, self.background, p[0], p[1], p[2], p[3]))
