@@ -75,7 +75,9 @@ class Planet(pygame.sprite.Sprite):
 			positioned = False
 			while not positioned:
 				self.mass = randint(8,512)
-				self.r = self.mass**(1.0/3.0) * 12.5 # radius
+                                # radius is between 25 and 100 when mass is
+                                # between 8 and 512
+				self.r = self.mass**(1.0/3.0) * 12.5
 				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
 				positioned = True
 				for p in planets:
