@@ -102,14 +102,12 @@ class Particle(pygame.sprite.Sprite):
 		for p in planets:
 			p_pos = p.get_pos()
 			r = p.get_radius()
+                        # d is not the distance from the planet, it's the distance squared.
 			d = (self.pos[0] - p_pos[0])**2 + (self.pos[1] - p_pos[1])**2
                         if p.type == "Blackhole":
-                                if r < 22.37:
-                                        min_dist = 500
-                                else:
-                                        min_dist = r**2
+                                min_dist = p.get_mass()
                                 if d <= min_dist:
-                                        self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
+                                        self.impact_pos = p_pos
                                         self.pos = self.impact_pos
                                         return -1
                         elif d <= (r)**2:
