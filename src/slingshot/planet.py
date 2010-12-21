@@ -133,9 +133,8 @@ class Blackhole(Planet):
                 self.type = "Blackhole"
 
                 self.image = pygame.surface.Surface((2, 2))
+                self.image.fill((0,0,0))
                 self.image.set_alpha(0)
-                #self.image.set_alpha(255)
-                self.image.fill((255, 0, 0))
                 self.rect = self.image.get_rect()
 
 		if n == None and planets != None:
