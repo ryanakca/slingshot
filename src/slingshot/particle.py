@@ -78,8 +78,20 @@ class Particle(pygame.sprite.Sprite):
 		for p in planets:
 			p_pos = p.get_pos()
 			mass = p.get_mass()
-			d = (self.pos[0] - p_pos[0])**2 + (self.pos[1] - p_pos[1])**2
-			a = (Settings.g * mass * (self.pos[0] - p_pos[0]) / (d * math.sqrt(d)), Settings.g * mass * (self.pos[1] - p_pos[1]) / (d * math.sqrt(d)))
+                        dx = self.pos[0] - p_pos[0]
+                        dy = self.pos[1] - p_pos[1]
+			d = dx**2 + dy**2
+                        # a is the acceleration in pixels/tick
+                        #  ->   [ G * m_p * \delta d_x     G * m_p * \delta d_y   ]
+                        #  a  = [ ---------------------- , ---------------------- ]
+                        #       [      r ^ (1/3)                 r ^ (1/3)        ]
+                        try:
+                            a = ((Settings.g * mass * dx) / (d * math.sqrt(d)), (Settings.g * mass * dy) / (d * math.sqrt(d)))
+                        except ZeroDivisionError:
+                            # Hackishly take any silly particles out of the game.
+                            a = (10000, 10000)
+                        # It's been a tick, update our velocity according to our
+                        # acceleration
 			self.v = (self.v[0] - a[0], self.v[1] - a[1])
 
 		self.pos = (self.pos[0] + self.v[0], self.pos[1] + self.v[1])
