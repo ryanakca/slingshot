@@ -153,14 +153,22 @@ class Blackhole(Planet):
 		if radius == None or mass == None or pos == None:
 			positioned = False
 			while not positioned:
+                                # We can't accurately represent blackholes in
+                                # this game. According to my (feeble)
+                                # understanding of the Schwarzschild radius, to
+                                # have a radius of 1m and be a black hole, we'd
+                                # have to have a mass of 6.73*10^26kg. At least
+                                # 600 is still 6 times larger than the size of
+                                # our largest planet.
 				self.mass = randint(600, 700)
 				self.r = 1 # radius
-                                # x: random integer between (the minimum distance
-                                # between a planet and the edge of the screen +
-                                # our radius rounded up) and (the same distance
-                                # from the bottom of the screen)
-                                # y: same thing, except from the sides.
-				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
+                                # Slightly more distance from the sides than
+                                # planets because of our massive gravit.
+                                # field.
+				self.pos = (randint(3 * Settings.PLANET_SHIP_DISTANCE + round(self.r),
+                                                    800 - 3 * Settings.PLANET_SHIP_DISTANCE - round(self.r)),
+                                            randint(3 * Settings.PLANET_EDGE_DISTANCE + round(self.r),
+                                                    600 - 3 * Settings.PLANET_EDGE_DISTANCE - round(self.r)))
 				positioned = True
 				for p in planets:
 					d = math.sqrt((self.pos[0] - p.get_pos()[0])**2 + (self.pos[1] - p.get_pos()[1])**2)
