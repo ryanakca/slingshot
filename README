@@ -10,7 +10,12 @@ at http://github.com/ryanakca/slingshot
 
 --- Changelog ---
 
-See http://github.com/ryanakca/slingshot/commits/master
+See http://github.com/ryanakca/slingshot/commits/master for a detailed listing.
+
+v0.9:
+ - Fix deprecation Python warnings and errors
+ - Introduce networking support
+ - Introduce black holes (very experimental, especially with networking)
 
 --- Requirements ---
 
