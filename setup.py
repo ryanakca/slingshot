@@ -44,7 +44,7 @@ data_files = [(os.path.join(prefix,'share/applications/'),
             ]
 
 setup(name='slingshot',
-      version='0.9',
+      version='0.10',
       description='Simple 2D shooting strategy game set in space, with gravity',
       author='See README',
       license='GNU General Public License version 2, or (at your option) ' +\
@@ -54,5 +54,6 @@ setup(name='slingshot',
       package_data={'slingshot':['data/*.png',
                                  'data/*.ttf']},
       package_dir={'slingshot':'src/slingshot'},
+      install_requires=['pygame', 'docopt'],
       data_files=data_files,
 )
