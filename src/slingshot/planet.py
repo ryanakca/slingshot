@@ -58,9 +58,11 @@ class Planet(pygame.sprite.Sprite):
 
 		if n == None and planets != None:
 			unique = False
-			while not unique:
+			n = 0
+			while n < 8 and not unique:
 				unique = True
-				self.n = randint(1, 8)
+				n += 1
+				self.n = n
 				for p in planets:
 					if self.n == p.get_n():
 						unique = False
