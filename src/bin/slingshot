@@ -31,6 +31,16 @@
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 # Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
+"""Slingshot
+
+Usage: slingshot [options]
+
+-d --debug    Debug mode. More verbose output and separate logfiles
+              for multiple instances on one computer.
+-v --version  Show version number
+-h --help     Show this help
+"""
+
 import pygame
 from pygame.locals import *
 import math
@@ -38,6 +48,8 @@ import os
 import sys
 import time
 import thread
+
+from docopt import docopt
 
 from random import randint
 
@@ -66,7 +78,8 @@ class Game:
 	Settings.round_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 100)
         Settings.fineprint = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 8)
 
-	def __init__(self):
+	def __init__(self, debug = False):
+		self.debug = debug
 		pygame.display.init()
 
 		self.clock = pygame.time.Clock()
@@ -387,11 +400,14 @@ class Game:
                                         result.add(Planet(result, self.background))
 		else:
 			for p in planetlist:
+				if self.debug: print("Planet num: {}/{}".format(p[0],Settings.MAX_PLANETS))
                                 if p[0] > Settings.MAX_PLANETS:
                                         # Numbers above Settings.MAX_PLANETS are
                                         # allocated to blackholes.
+					if self.debug: print("Added Blackhole")
                                         result.add(Blackhole(None, self.background, p[0], p[1], p[2], p[3]))
                                 else:
+					if self.debug: print("Added Planet")
                                         result.add(Planet(None, self.background, p[0], p[1], p[2], p[3]))
 		return result
 
@@ -1121,18 +1137,27 @@ class Game:
         def use_window(self):
                 pygame.display.set_mode((800, 600))
 
-def main():
-
+def main(arguments):
+	debug = arguments['--debug']
 	#sys.stdout = Blackhole()
 	#sys.stderr = Blackhole()
 
 	path = os.path.expanduser("~") + "/.slingshot"
 	if not os.path.exists(path):
 		os.mkdir(path)
-	path += "/logfile.txt"
+	if debug:
+		path += "/logfile-{}.txt".format(os.getpid())
+	else:
+		path += "/logfile.txt"
+
+	if debug:
+		print("My output goes to:\n{}".format(path))
+
 	sys.stderr = open(path,"w")
 	sys.stdout = sys.stderr
-	game = Game()
+	game = Game(debug = debug)
 	game.run()
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+	arguments = docopt(__doc__, version='Slingshot v{}'.format(Settings.VERSION))
+	main(arguments)
