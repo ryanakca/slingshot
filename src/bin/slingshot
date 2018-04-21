@@ -35,10 +35,11 @@
 
 Usage: slingshot [options]
 
--d --debug    Debug mode. More verbose output and separate logfiles
-              for multiple instances on one computer.
--v --version  Show version number
--h --help     Show this help
+-d --debug       Debug mode. More verbose output and separate logfiles
+                 for multiple instances on one computer.
+-v --version     Show version number
+-h --help        Show this help
+-f --fullscreen  Force fullscreen mode. (Otherwise use the saved setting)
 """
 
 import pygame
@@ -1155,6 +1156,8 @@ def main(arguments):
 
 	sys.stderr = open(path,"w")
 	sys.stdout = sys.stderr
+	if arguments['--fullscreen']:
+		Settings.FULLSCREEN = True
 	game = Game(debug = debug)
 	game.run()
 
