@@ -31,11 +31,12 @@ from slingshot.general import *
 
 class Player(pygame.sprite.Sprite):
 
-	def __init__(self, n):
+	def __init__(self, n, name=None):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
 		self.player = n
 		self.init()
 		self.score = 0
+		self.name = name
 
 	def init(self, y_coord = None):
 		self.power = 100
@@ -76,6 +77,12 @@ class Player(pygame.sprite.Sprite):
 
 		if Settings.FIXED_POWER:
 			self.power = Settings.POWER
+
+	def get_name(self):
+		if self.name is None:
+			return "Player {}".format(self.player)
+		else:
+			return self.name
 
 	def reset_score(self):
 		self.score = 0
@@ -181,11 +188,11 @@ class Player(pygame.sprite.Sprite):
 
 	def draw_status(self, screen):
 		if self.player == 1:
-			txt = Settings.font.render("Player 1  --  %d" %(self.score), 1, self.color)
+			txt = Settings.font.render("{}  --  {}".format(self.get_name(), self.score), 1, self.color)
 			rect = txt.get_rect()
 			rect.topleft = (5,5)
 		else:
-			txt = Settings.font.render("%d  --  Player 2" %(self.score), 1, self.color)
+			txt = Settings.font.render("{}  --  {}".format(self.score, self.get_name()), 1, self.color)
 			rect = txt.get_rect()
 			rect.topright = (794,5)
 		screen.blit(txt, rect.topleft)

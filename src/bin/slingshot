@@ -33,13 +33,16 @@
 
 """Slingshot
 
-Usage: slingshot [options]
+Usage: slingshot [options] [--player1=<Player Name>] [--player2=<Player Name>]
 
--d --debug    Debug mode. More verbose output and separate logfiles
-              for multiple instances on one computer.
--v --version  Show version number
--h --help     Show this help
--f --fullscreen  Force fullscreen mode. (Otherwise use the saved setting)
+-d, --debug       Debug mode. More verbose output and separate logfiles
+                  for multiple instances on one computer.
+-v, --version     Show version number
+-h, --help        Show this help
+-f, --fullscreen  Force fullscreen mode. (Otherwise use the saved setting)
+
+-1 <Player Name>, --player1 <Player Name>  Name of player 1
+-2 <Player Name>, --player2 <Player Name>  Name of player 2
 """
 
 import pygame
@@ -82,8 +85,10 @@ class Game:
         get_data_path("FreeSansBold.ttf"), 100)
     Settings.fineprint = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 8)
 
-        def __init__(self, debug=False):
+        def __init__(self, debug=False, player_names=[None, None]):
                 self.debug = debug
+                self.player_names = player_names
+
         pygame.display.init()
 
         self.clock = pygame.time.Clock()
@@ -121,7 +126,8 @@ class Game:
 
         self.background, r = load_image("backdrop.png")
 
-        self.players = (Dummy(), Player(1), Player(2))
+        self.players = (Dummy(), Player(
+            1, self.player_names[0]), Player(2, self.player_names[1]))
         self.playersprites = pygame.sprite.RenderPlain(
             (self.players[1], self.players[2]))
         self.missile = Missile(self.trail_screen)
@@ -307,6 +313,10 @@ class Game:
 
             self.players[1].init(y_coordlist[0])
             self.players[2].init(y_coordlist[1])
+                        # Overwrite network-game names for now
+                        # TBD: revert when changing to single player
+                        self.players[1].name = "Local Player"
+                        self.players[2].name = "Remote Player"
 
         self.missile.flight = 0
 
@@ -334,6 +344,10 @@ class Game:
             self.show_planets = 0
 
         if self.net_host:
+                        # Overwrite network-game names for now
+                        # TBD: revert when changing to single player
+                        self.players[1].name = "Remote Player"
+                        self.players[2].name = "Local Player"
             self.host_round_init()
 
     def toggle_menu(self):
@@ -735,13 +749,14 @@ class Game:
         for i in xrange(1, 3):
             if self.players[i].shot:
                 if self.player == 3 - i:
-                    message = "Player %d killed self" % (i)
+                                        message = "{} killed self".format(self.players[i].get_name())
                     score = Settings.SELFHIT
                     score_message = "%d deducted from score" % (score)
                     self.players[i].add_score(-score)
                     killed_self = True
                 else:
-                    message = "Player %d killed player %d" % ((3 - i), i)
+                                        message = "{} killed {}".format( self.players[(3 - i)].get_name()
+                                                                       , self.players[i].get_name())
                     if self.players[3 - i].attempts == 1:
                         bonus = Settings.QUICKSCORE1
                     elif self.players[3 - i].attempts == 2:
@@ -833,7 +848,7 @@ class Game:
                         winner = 0
                     Settings.font.set_bold(True)
                     if winner != 0:
-                        msg = Settings.font.render("Player %d has won the game" % (winner), 1, (255, 255, 255))
+                                                msg = Settings.font.render("{} has won the game".format(self.players[winner].get_name()), 1, (255,255,255))
                     else:
                         msg = Settings.font.render("The game has ended in a tie", 1, (255, 255, 255))
                     Settings.font.set_bold(False)
@@ -1053,7 +1068,7 @@ class Game:
         if self.net_play():
             self.net.close()
 
-		self.net = Network(3999, debug = self.debug)
+                self.net = Network(3999, debug = self.debug)
         while 1:
             # Menu changed - player want no network game anymore
             if self.menu != self.net_host_menu:
@@ -1082,7 +1097,7 @@ class Game:
         if self.net_play():
             self.net.close()
 
-		self.net = Network(3999, debug = self.debug)
+                self.net = Network(3999, debug = self.debug)
 
         if self.net.cnct(hostname) is not False:
             packet = self.net.recv()
@@ -1150,9 +1165,11 @@ def main(arguments):
 
     sys.stderr = open(path, "w")
     sys.stdout = sys.stderr
-	if arguments['--fullscreen']:
-		Settings.FULLSCREEN = True
-        game = Game(debug = debug)
+        if arguments['--fullscreen']:
+                Settings.FULLSCREEN = True
+        if debug: print("DocOpt arguments {}".format(arguments))
+        player_names = [arguments['--player1'], arguments['--player2']]
+        game = Game(debug = debug, player_names = player_names)
     game.run()
 
 if __name__ == '__main__':
