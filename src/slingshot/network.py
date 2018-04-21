@@ -31,7 +31,8 @@ except:
 
 class Network:
 
-	def __init__(self, port, buf_size = 4096):
+	def __init__(self, port, buf_size = 4096, debug = False):
+		self.debug = debug
 		self.port = port
 		self.buf_size = buf_size
 
@@ -100,19 +101,21 @@ class Network:
 			self.r_stream = self.s.makefile('rb')
 
 	def send(self, data):
-#       print(data)
+		if self.debug: print(data)
 		try:
 			pickle.dump(data ,self.w_stream, 1)
 			self.w_stream.flush()
-		except:
+		except BaseException as be:
+			print(be)
 			return False
 
 	def recv(self):
 		try:
 			data = pickle.load(self.r_stream)
-#            print(data)
+			if self.debug: print(data)
 			return data
-		except:
+		except BaseException as be:
+			print(be)
 			return False
 
 	def close(self):

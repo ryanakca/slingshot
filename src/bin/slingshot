@@ -1057,7 +1057,7 @@ class Game:
 		if self.net_play():
 			self.net.close()
 
-		self.net = Network(3999)
+		self.net = Network(3999, debug = self.debug)
 		while 1:
 			# Menu changed - player want no network game anymore
 			if self.menu != self.net_host_menu:
@@ -1087,7 +1087,7 @@ class Game:
 		if self.net_play():
 			self.net.close()
 
-		self.net = Network(3999)
+		self.net = Network(3999, debug = self.debug)
 
 		if self.net.cnct(hostname) != False:
 			packet = self.net.recv()
