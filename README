@@ -1,4 +1,4 @@
-Slingshot v0.9
+Slingshot v0.10
 
 http://github.com/ryanakca/slingshot
 
@@ -11,6 +11,11 @@ at http://github.com/ryanakca/slingshot
 --- Changelog ---
 
 See http://github.com/ryanakca/slingshot/commits/master for a detailed listing.
+
+v0.10:
+ - Fixed Planets in Network game
+ - Introduce command line options
+ - Introduced option to change player names
 
 v0.9:
  - Fix deprecation Python warnings and errors

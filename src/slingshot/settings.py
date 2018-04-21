@@ -26,7 +26,7 @@ import os.path
 
 class Settings:
 
-        VERSION = '0.9'
+        VERSION = '0.10'
 
 	g = 120 # gravity
 	MAXPOWER = 350
