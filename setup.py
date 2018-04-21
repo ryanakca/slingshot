@@ -54,5 +54,6 @@ setup(name='slingshot',
       package_data={'slingshot':['data/*.png',
                                  'data/*.ttf']},
       package_dir={'slingshot':'src/slingshot'},
+      install_requires=['pygame', 'docopt'],
       data_files=data_files,
 )

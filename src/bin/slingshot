@@ -31,6 +31,16 @@
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 # Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 
+"""Slingshot
+
+Usage: slingshot [options]
+
+-d --debug    Debug mode. More verbose output and separate logfiles
+              for multiple instances on one computer.
+-v --version  Show version number
+-h --help     Show this help
+"""
+
 import pygame
 from pygame.locals import *
 import math
@@ -38,6 +48,8 @@ import os
 import sys
 import time
 import thread
+
+from docopt import docopt
 
 from random import randint
 
@@ -50,7 +62,7 @@ from slingshot.menu import *
 from slingshot.network import *
 from slingshot.inputbox import *
 
-#class Blackhole(object):
+# class Blackhole(object):
 #   softspace = 0
 #   def write(self, text):
 #       pass
@@ -63,11 +75,14 @@ class Game:
 
     pygame.font.init()
     Settings.font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 14)
-    Settings.menu_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), Settings.MENU_FONT_SIZE)
-    Settings.round_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 100)
+    Settings.menu_font = pygame.font.Font(get_data_path(
+        "FreeSansBold.ttf"), Settings.MENU_FONT_SIZE)
+    Settings.round_font = pygame.font.Font(
+        get_data_path("FreeSansBold.ttf"), 100)
     Settings.fineprint = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 8)
 
-    def __init__(self):
+        def __init__(self, debug=False):
+                self.debug = debug
         pygame.display.init()
 
         self.clock = pygame.time.Clock()
@@ -77,13 +92,17 @@ class Game:
         pygame.display.set_icon(icon)
         pygame.display.set_caption('Slingshot')
 
-        Settings.particle_image10, Settings.particle_image10_rect = load_image("explosion-10.png", (0, 0, 0))
-        Settings.particle_image5, Settings.particle_image5_rect = load_image("explosion-5.png", (0, 0, 0))
+        Settings.particle_image10, Settings.particle_image10_rect = load_image(
+            "explosion-10.png", (0, 0, 0))
+        Settings.particle_image5, Settings.particle_image5_rect = load_image(
+            "explosion-5.png", (0, 0, 0))
 
-        Settings.menu_background, Settings.menu_rect = load_image("menu.png", (0, 0, 0))
+        Settings.menu_background, Settings.menu_rect = load_image(
+            "menu.png", (0, 0, 0))
         Settings.box, rect = load_image("box.png", (0, 0, 0))
         Settings.tick, rect = load_image("tick.png", (0, 0, 0))
-        Settings.tick_inactive, rect = load_image("tick_inactive.png", (0, 0, 0))
+        Settings.tick_inactive, rect = load_image(
+            "tick_inactive.png", (0, 0, 0))
 
         self.trail_screen = pygame.Surface(self.screen.get_size())
         self.trail_screen = self.trail_screen.convert()
@@ -97,12 +116,13 @@ class Game:
         self.dim_screen = pygame.Surface(self.screen.get_size())
         self.dim_screen.set_alpha(175)
         self.dim_screen = self.dim_screen.convert_alpha()
-        #self.dim_screen.fill((0, 0, 0))
+        # self.dim_screen.fill((0, 0, 0))
 
         self.background, r = load_image("backdrop.png")
 
         self.players = (Dummy(), Player(1), Player(2))
-        self.playersprites = pygame.sprite.RenderPlain((self.players[1], self.players[2]))
+        self.playersprites = pygame.sprite.RenderPlain(
+            (self.players[1], self.players[2]))
         self.missile = Missile(self.trail_screen)
         self.missilesprite = pygame.sprite.RenderPlain((self.missile))
 
@@ -114,14 +134,14 @@ class Game:
         if self.fullscreen:
             self.use_fullscreen()
 
-        #self.fixed_power = Settings.FIXED_POWER
-        #self.bounce = Settings.BOUNCE
-        #self.invisible = Settings.INVISIBLE
-        #self.random = Settings.RANDOM
-        #self.timeout = Settings.MAX_FLIGHT
+        # self.fixed_power = Settings.FIXED_POWER
+        # self.bounce = Settings.BOUNCE
+        # self.invisible = Settings.INVISIBLE
+        # self.random = Settings.RANDOM
+        # self.timeout = Settings.MAX_FLIGHT
 
-        #self.max_planets = Settings.MAX_PLANETS
-        #self.max_rounds = Settings.MAX_ROUNDS
+        # self.max_planets = Settings.MAX_PLANETS
+        # self.max_rounds = Settings.MAX_ROUNDS
 
         self.main_menu = Menu("Menu", copyright=True)
         self.main_menu.add("Back to game")
@@ -131,15 +151,18 @@ class Game:
         self.main_menu.add("Help")
         self.main_menu.add("Quit")
 
-        self.confirm_menu1 = Confirm("Starting a new game", "will apply new settings", "and reset the scores")
+        self.confirm_menu1 = Confirm(
+            "Starting a new game", "will apply new settings", "and reset the scores")
         self.confirm_menu1.add("Yes")
         self.confirm_menu1.add("No")
 
-        self.confirm_menu2 = Confirm("Starting a new game", "will reset the scores")
+        self.confirm_menu2 = Confirm(
+            "Starting a new game", "will reset the scores")
         self.confirm_menu2.add("Yes")
         self.confirm_menu2.add("No")
 
-        self.apply_menu = Confirm("This will start a", "new game and reset", "the scores")
+        self.apply_menu = Confirm(
+            "This will start a", "new game and reset", "the scores")
         self.apply_menu.add("Yes")
         self.apply_menu.add("No")
 
@@ -164,9 +187,11 @@ class Game:
         self.style_menu = Menu("Game style")
         self.style_menu.add("Back")
         self.style_menu.addoption("Random", self.random)
-        self.style_menu.addoption("Fixed power", self.fixed_power, not self.random)
+        self.style_menu.addoption(
+            "Fixed power", self.fixed_power, not self.random)
         self.style_menu.addoption("Bounce", self.bounce, not self.random)
-        self.style_menu.addoption("Invisible planets", self.invisible, not self.random)
+        self.style_menu.addoption(
+            "Invisible planets", self.invisible, not self.random)
 
         self.mode_menu = Menu("Game options")
         self.mode_menu.add("Back")
@@ -175,15 +200,18 @@ class Game:
         self.mode_menu.add("Number of rounds")
         self.mode_menu.add("Shot timeout")
 
-        self.timeout_menu = Numeric("Shot timeout", self.timeout, 250, 2000, 500)
+        self.timeout_menu = Numeric(
+            "Shot timeout", self.timeout, 250, 2000, 500)
 
         self.graphics_menu = Menu("Graphics")
         self.graphics_menu.add("Particles")
         self.graphics_menu.add("Full Screen")
 
-        self.planet_menu = Numeric("Maximum number of planets", self.max_planets, 1, 8, 2)
+        self.planet_menu = Numeric(
+            "Maximum number of planets", self.max_planets, 1, 8, 2)
 
-        self.blackholes_menu = Numeric("Maximum number of black holes", self.max_blackholes, 1, 3, 0)
+        self.blackholes_menu = Numeric(
+            "Maximum number of black holes", self.max_blackholes, 1, 3, 0)
 
         self.particles_menu = Menu("Particle")
         self.particles_menu.add("Back")
@@ -195,7 +223,8 @@ class Game:
         self.fullscreen_menu.add("On")
         self.fullscreen_menu.add("Off")
 
-        self.rounds_menu = Numeric("Number of rounds", self.max_rounds, 1, 100, 0, "Infinite")
+        self.rounds_menu = Numeric(
+            "Number of rounds", self.max_rounds, 1, 100, 0, "Infinite")
 
         self.help_menu = Help()
 
@@ -221,7 +250,8 @@ class Game:
         self.bounce_count_inc = 7
 
     def settings_changed(self):
-        result = (Settings.MAX_PLANETS != self.max_planets) or (Settings.MAX_FLIGHT != self.timeout) or (Settings.BOUNCE != self.bounce) or (Settings.INVISIBLE != self.invisible) or (Settings.FIXED_POWER != self.fixed_power) or (Settings.MAX_ROUNDS != self.max_rounds) or (Settings.RANDOM != self.random) or (Settings.FULLSCREEN != self.fullscreen)
+        result = (Settings.MAX_PLANETS != self.max_planets) or (Settings.MAX_FLIGHT != self.timeout) or (Settings.BOUNCE != self.bounce) or (Settings.INVISIBLE != self.invisible) or (
+            Settings.FIXED_POWER != self.fixed_power) or (Settings.MAX_ROUNDS != self.max_rounds) or (Settings.RANDOM != self.random) or (Settings.FULLSCREEN != self.fullscreen)
 
         return result
 
@@ -371,11 +401,14 @@ class Game:
                     result.add(Planet(result, self.background))
         else:
             for p in planetlist:
+                                if self.debug: print("Planet num: {}/{}".format(p[0], Settings.MAX_PLANETS))
                 if p[0] > Settings.MAX_PLANETS:
                     # Numbers above Settings.MAX_PLANETS are
                     # allocated to blackholes.
+                                        if self.debug: print("Added Blackhole")
                     result.add(Blackhole(None, self.background, p[0], p[1], p[2], p[3]))
                 else:
+                                        if self.debug: print("Added Planet")
                     result.add(Planet(None, self.background, p[0], p[1], p[2], p[3]))
         return result
 
@@ -1098,21 +1131,27 @@ class Game:
         def use_window(self):
                 pygame.display.set_mode((800, 600))
 
-
-def main():
-
-    #sys.stdout = Blackhole()
-    #sys.stderr = Blackhole()
+def main(arguments):
+    debug = arguments['--debug']
+    # sys.stdout = Blackhole()
+    # sys.stderr = Blackhole()
 
     path = os.path.expanduser("~") + "/.slingshot"
     if not os.path.exists(path):
         os.mkdir(path)
+        if debug:
+                path += "/logfile-{}.txt".format(os.getpid())
+        else:
     path += "/logfile.txt"
+
+        if debug:
+                print("My output goes to:\n{}".format(path))
+
     sys.stderr = open(path, "w")
     sys.stdout = sys.stderr
-    game = Game()
+        game = Game(debug = debug)
     game.run()
 
-
 if __name__ == '__main__':
-    main()
+        arguments = docopt(__doc__, version='Slingshot v{}'.format(Settings.VERSION))
+        main(arguments)
