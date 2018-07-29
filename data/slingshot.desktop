@@ -1,9 +1,18 @@
 [Desktop Entry]
+Version=1.3
+Type=Application
 Name=Slingshot
-Name[xx]=xxslingshotxx
+GenericName=Gravity Game
+GenericName[de]=Gravitationsspiel
+GenericName[fr]=jeu avec gravité
+Comment=2D space gravity game for 2 players
+Comment[de]=2D Weltraumspiel für 2 Spieler
+Comment[fr]=Jeu d'espace 2D avec gravité
 Exec=slingshot
 Icon=slingshot
-Type=Application
-GenericName=2D space shooting game with gravity
-GenericName[fr]=Jeu d'espace 2D avec gravité
+Terminal=false
+StartupNotify=true
 Categories=Game;StrategyGame;
+Keywords=multiplayer;two;shooting;
+Keywords[de]=Mehrspieler;Space;Raumschiffe;schießen;zwei;
+Keywords[fr]=deux;joueur;tirer;

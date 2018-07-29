@@ -39,6 +39,8 @@ for i, arg in enumerate(sys.argv):
 
 data_files = [(os.path.join(prefix,'share/applications/'),
                     ['data/slingshot.desktop']),
+              (os.path.join(prefix,'share/metainfo/'),
+                    ['data/slingshot.metainfo.xml']),
               (os.path.join(prefix, 'share/pixmaps/'),
                     ['data/slingshot.xpm'])
             ]
