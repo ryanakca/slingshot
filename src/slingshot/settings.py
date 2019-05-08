@@ -29,7 +29,7 @@ class Settings:
         VERSION = '0.9r2'
 
 	g = 120 # gravity
-	MAXPOWER = 350
+	MAXPOWER = 1000
 	PLANET_SHIP_DISTANCE = 75 # this is actually the distance towards the edge left and right
 	PLANET_EDGE_DISTANCE = 50 # upper and lower edge
 
@@ -64,7 +64,7 @@ class Settings:
 	QUICKSCORE2 = 200
 	QUICKSCORE3 = 100
 
-	PENALTY_FACTOR = 5
+	PENALTY_FACTOR = 2 
 
 	FPS = 30
 	KEY_REPEAT = 30 # time between repeating key events, keep a little lower than 1000 / FPS
@@ -77,4 +77,4 @@ class Settings:
 
         DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
 
-        FULLSCREEN = False
+        FULLSCREEN = True
