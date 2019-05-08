@@ -387,8 +387,9 @@ class Game:
                                         result.add(Planet(result, self.background))
 		else:
 			for p in planetlist:
-                                if p[0] > Settings.MAX_PLANETS:
-                                        # Numbers above Settings.MAX_PLANETS are
+                                if p[0] > Settings.MAX_PLANETS_SPRITES:
+                                        # Numbers above
+                                        # Settings.MAX_PLANETS_SPRITES are
                                         # allocated to blackholes.
                                         result.add(Blackhole(None, self.background, p[0], p[1], p[2], p[3]))
                                 else:

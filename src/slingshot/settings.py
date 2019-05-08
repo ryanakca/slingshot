@@ -26,7 +26,7 @@ import os.path
 
 class Settings:
 
-        VERSION = '0.9'
+        VERSION = '0.9r2'
 
 	g = 120 # gravity
 	MAXPOWER = 350
@@ -52,6 +52,10 @@ class Settings:
 	MAX_FLIGHT = 750
 
 	MAX_PLANETS = 4
+        MAX_PLANETS_SPRITES = 8 # BUGFIX: this caused problems in network games.
+        # MAX_PLANTES_SPRITES is the number of PLANET_SPRITES, hence the maximal
+        # number for any Planet.n and we can identify BHs by haveing an n >
+        # MAX_PLANETS_SPRITES
         MAX_BLACKHOLES = 0
 
 	HITSCORE = 1500
