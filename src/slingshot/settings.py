@@ -24,53 +24,59 @@
 
 import os.path
 
+
 class Settings:
 
-        VERSION = '0.10'
+    VERSION = '0.10'
 
-	g = 120 # gravity
-	MAXPOWER = 350
-	PLANET_SHIP_DISTANCE = 75 # this is actually the distance towards the edge left and right
-	PLANET_EDGE_DISTANCE = 50 # upper and lower edge
+    g = 120  # gravity
+    MAXPOWER = 350
+    # this is actually the distance towards the edge left and right
+    PLANET_SHIP_DISTANCE = 75
+    PLANET_EDGE_DISTANCE = 50  # upper and lower edge
 
-	PARTICLE_5_MINSPEED = 100
-	PARTICLE_5_MAXSPEED = 200 # 200: easy, 300: wild
-	PARTICLE_10_MINSPEED = 150
-	PARTICLE_10_MAXSPEED = 250 # 250 easy, 400-500 wild
-	n_PARTICLES_5 = 20  # number of small particles originating from a big one
-	n_PARTICLES_10 = 30 # number of big particles originating from explosion
-		# if both are too high, the game stalls on impact
+    PARTICLE_5_MINSPEED = 100
+    PARTICLE_5_MAXSPEED = 200  # 200: easy, 300: wild
+    PARTICLE_10_MINSPEED = 150
+    PARTICLE_10_MAXSPEED = 250  # 250 easy, 400-500 wild
+    n_PARTICLES_5 = 20  # number of small particles originating from a big one
+    n_PARTICLES_10 = 30  # number of big particles originating from explosion
+    # if both are too high, the game stalls on impact
 
-	ROTATE = True
-	BOUNCE = False
-	FIXED_POWER = False
-	PARTICLES = True
-	INVISIBLE = False
-	RANDOM = False
-	POWER = 200
+    ROTATE = True
+    BOUNCE = False
+    FIXED_POWER = False
+    PARTICLES = True
+    INVISIBLE = False
+    RANDOM = False
+    POWER = 200
 
-	MAX_FLIGHT = 750
+    MAX_FLIGHT = 750
 
-	MAX_PLANETS = 4
-        MAX_BLACKHOLES = 0
+    MAX_PLANETS = 4
+    # MAX_PLANTES_SPRITES is the number of planet sprites, hence the maximal
+    # number for any Planet.n and we can identify BHs by haveing an n >
+    # NUM_PLANET_SPRITES
+    NUM_PLANET_SPRITES = 8
+    MAX_BLACKHOLES = 0
 
-	HITSCORE = 1500
-	SELFHIT = 2000
-	QUICKSCORE1 = 500
-	QUICKSCORE2 = 200
-	QUICKSCORE3 = 100
+    HITSCORE = 1500
+    SELFHIT = 2000
+    QUICKSCORE1 = 500
+    QUICKSCORE2 = 200
+    QUICKSCORE3 = 100
 
-	PENALTY_FACTOR = 5
+    PENALTY_FACTOR = 5
 
-	FPS = 30
-	KEY_REPEAT = 30 # time between repeating key events, keep a little lower than 1000 / FPS
-	KEY_DELAY = 250
+    FPS = 30
+    KEY_REPEAT = 30  # time between repeating key events, keep a little lower than 1000 / FPS
+    KEY_DELAY = 250
 
-	MENU_FONT_SIZE = 26
-	MENU_LINEFEED = 36
+    MENU_FONT_SIZE = 26
+    MENU_LINEFEED = 36
 
-	MAX_ROUNDS = 0
+    MAX_ROUNDS = 0
 
-        DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
+    DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
 
-        FULLSCREEN = False
+    FULLSCREEN = False
