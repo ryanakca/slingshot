@@ -1,0 +1,7 @@
+#! /bin/sh
+
+# THX to stackexchange
+BASE=`dirname $0`
+PYTHONPATH=$PYTHONPATH:$BASE/build/lib.linux-x86_64-2.7
+exec $BASE/build/scripts-2.7/slingshot
+
