@@ -1093,11 +1093,11 @@ class Game:
             self.net.close()
         return ret
 
-        def use_fullscreen(self):
-                pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.NOFRAME)
+    def use_fullscreen(self):
+            pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.NOFRAME)
 
-        def use_window(self):
-                pygame.display.set_mode((800, 600))
+    def use_window(self):
+            pygame.display.set_mode((800, 600))
 
 
 def main():
