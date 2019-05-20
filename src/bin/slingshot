@@ -1034,7 +1034,8 @@ class Game:
 
         if ret is not False:
             packet = (self.bounce, self.fixed_power, self.invisible, self.random, self.max_planets, self.timeout, self.max_rounds, self.max_blackholes)
-            if not self.net.send(packet):
+            if self.net.send(packet) == False:
+                print "ERROR in host_game_init when sending"
                 self.menu = self.net_error_menu
                 self.net.close()
                 return
@@ -1042,6 +1043,7 @@ class Game:
             self.save_settings()
             self.game_init(net_host=True)
         else:
+            print "ERROR in host_game_init in connecting"
             self.menu = self.net_error_menu
             self.net.close()
 
@@ -1051,9 +1053,9 @@ class Game:
 
         self.net = Network(3999)
 
-        if self.net.cnct(hostname) is not False:
+        if self.net.cnct(hostname) != False:
             packet = self.net.recv()
-            if not packet:
+            if packet == False:
                 self.menu = self.net_error_menu
                 self.net.close()
                 return
@@ -1069,6 +1071,7 @@ class Game:
 
             self.menu = None
             self.save_settings()
+            print "client_game_init succeded"
             self.game_init(net_client=True)
         else:
             self.menu = self.net_error_menu
@@ -1082,15 +1085,17 @@ class Game:
         y_coordlist = (self.players[1].get_rect_y_coord(), self.players[2].get_rect_y_coord())
 
         packet = (planetlist, y_coordlist)
-        if not self.net.send(packet):
+        if self.net.send(packet) == False:
+            print "ERROR in host_round_init "
             self.menu = self.net_error_menu
             self.net.close()
 
     def client_round_init(self):
         ret = self.net.recv()
-        if not ret:
+        if ret == False:
             self.menu = self.net_error_menu
             self.net.close()
+            return None
         return ret
 
     def use_fullscreen(self):
@@ -1108,7 +1113,7 @@ def main():
     path = os.path.expanduser("~") + "/.slingshot"
     if not os.path.exists(path):
         os.mkdir(path)
-    path += "/logfile.txt"
+    path += "/logfile" + str(randint(1,10000)) + ".txt"
     sys.stderr = open(path, "w")
     sys.stdout = sys.stderr
     game = Game()
