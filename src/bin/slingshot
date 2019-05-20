@@ -1034,7 +1034,7 @@ class Game:
 
         if ret is not False:
             packet = (self.bounce, self.fixed_power, self.invisible, self.random, self.max_planets, self.timeout, self.max_rounds, self.max_blackholes)
-            if self.net.send(packet) == False:
+            if self.net.send(packet) is False:
                 print "ERROR in host_game_init when sending"
                 self.menu = self.net_error_menu
                 self.net.close()
@@ -1053,7 +1053,7 @@ class Game:
 
         self.net = Network(3999)
 
-        if self.net.cnct(hostname) != False:
+        if self.net.cnct(hostname) is not False:
             packet = self.net.recv()
             if packet == False:
                 self.menu = self.net_error_menu
@@ -1085,7 +1085,7 @@ class Game:
         y_coordlist = (self.players[1].get_rect_y_coord(), self.players[2].get_rect_y_coord())
 
         packet = (planetlist, y_coordlist)
-        if self.net.send(packet) == False:
+        if self.net.send(packet) is False:
             print "ERROR in host_round_init "
             self.menu = self.net_error_menu
             self.net.close()
@@ -1113,6 +1113,8 @@ def main():
     path = os.path.expanduser("~") + "/.slingshot"
     if not os.path.exists(path):
         os.mkdir(path)
+    # randomize name of logfile for debugging, since multiple instances might be
+    # running for the same user
     path += "/logfile" + str(randint(1,10000)) + ".txt"
     sys.stderr = open(path, "w")
     sys.stdout = sys.stderr
