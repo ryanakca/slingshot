@@ -1,23 +1,27 @@
 #    This file is part of Slingshot.
 #
-# Slingshot is a two-dimensional strategy game where two players attempt to shoot one
-# another through a section of space populated by planets.  The main feature of the
-# game is that the shots, once fired, are affected by the gravity of the planets.
+# Slingshot is a two-dimensional strategy game where two players
+# attempt to shoot one another through a section of space populated by
+# planets.  The main feature of the game is that the shots, once
+# fired, are affected by the gravity of the planets.
 
-# Slingshot is Copyright 2007 Jonathan Musther and Bart Mak. It is released under the
-# terms of the GNU General Public License version 2, or later if applicable.
+# Slingshot is Copyright 2007 Jonathan Musther and Bart Mak. It is
+# released under the terms of the GNU General Public License version
+# 2, or later if applicable.
 
-# Slingshot is free software; you can redistribute it and/or modify it under the terms
-# of the GNU General Public License as published by the Free Software Foundation; either
-# version 2 of the License, or any later version.
+# Slingshot is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# any later version.
 
-# Slingshot is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU General Public License for more details.
+# Slingshot is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
 
-# You should have received a copy of the GNU General Public License along with Slingshot;
-# if not, write to
-# the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+# You should have received a copy of the GNU General Public License
+# along with Slingshot; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
 # Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
@@ -69,7 +73,9 @@ class Settings:
     PENALTY_FACTOR = 5
 
     FPS = 30
-    KEY_REPEAT = 30  # time between repeating key events, keep a little lower than 1000 / FPS
+    # KEY_REPEAT is the time between repeating key events, keep a
+    # little lower than 1000 / FPS
+    KEY_REPEAT = 30
     KEY_DELAY = 250
 
     MENU_FONT_SIZE = 26
