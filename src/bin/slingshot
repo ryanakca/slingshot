@@ -371,8 +371,9 @@ class Game:
                     result.add(Planet(result, self.background))
         else:
             for p in planetlist:
-                if p[0] > Settings.MAX_PLANETS:
-                    # Numbers above Settings.MAX_PLANETS are
+                if p[0] > Settings.NUM_PLANET_SPRITES:
+                    # Numbers above
+                    # Settings.NUM_PLANET_SPRITES are
                     # allocated to blackholes.
                     result.add(Blackhole(None, self.background, p[0], p[1], p[2], p[3]))
                 else:
@@ -1033,7 +1034,8 @@ class Game:
 
         if ret is not False:
             packet = (self.bounce, self.fixed_power, self.invisible, self.random, self.max_planets, self.timeout, self.max_rounds, self.max_blackholes)
-            if not self.net.send(packet):
+            if self.net.send(packet) is False:
+                print "ERROR in host_game_init when sending"
                 self.menu = self.net_error_menu
                 self.net.close()
                 return
@@ -1041,6 +1043,7 @@ class Game:
             self.save_settings()
             self.game_init(net_host=True)
         else:
+            print "ERROR in host_game_init in connecting"
             self.menu = self.net_error_menu
             self.net.close()
 
@@ -1052,7 +1055,7 @@ class Game:
 
         if self.net.cnct(hostname) is not False:
             packet = self.net.recv()
-            if not packet:
+            if packet == False:
                 self.menu = self.net_error_menu
                 self.net.close()
                 return
@@ -1068,6 +1071,7 @@ class Game:
 
             self.menu = None
             self.save_settings()
+            print "client_game_init succeded"
             self.game_init(net_client=True)
         else:
             self.menu = self.net_error_menu
@@ -1081,22 +1085,24 @@ class Game:
         y_coordlist = (self.players[1].get_rect_y_coord(), self.players[2].get_rect_y_coord())
 
         packet = (planetlist, y_coordlist)
-        if not self.net.send(packet):
+        if self.net.send(packet) is False:
+            print "ERROR in host_round_init "
             self.menu = self.net_error_menu
             self.net.close()
 
     def client_round_init(self):
         ret = self.net.recv()
-        if not ret:
+        if ret == False:
             self.menu = self.net_error_menu
             self.net.close()
+            return None
         return ret
 
-        def use_fullscreen(self):
-                pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.NOFRAME)
+    def use_fullscreen(self):
+            pygame.display.set_mode((0, 0), pygame.FULLSCREEN | pygame.NOFRAME)
 
-        def use_window(self):
-                pygame.display.set_mode((800, 600))
+    def use_window(self):
+            pygame.display.set_mode((800, 600))
 
 
 def main():
@@ -1107,7 +1113,9 @@ def main():
     path = os.path.expanduser("~") + "/.slingshot"
     if not os.path.exists(path):
         os.mkdir(path)
-    path += "/logfile.txt"
+    # randomize name of logfile for debugging, since multiple instances might be
+    # running for the same user
+    path += "/logfile" + str(randint(1,10000)) + ".txt"
     sys.stderr = open(path, "w")
     sys.stdout = sys.stderr
     game = Game()

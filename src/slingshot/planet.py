@@ -60,7 +60,7 @@ class Planet(pygame.sprite.Sprite):
 			unique = False
 			while not unique:
 				unique = True
-				self.n = randint(1, 8)
+				self.n = randint(1, Settings.NUM_PLANET_SPRITES)
 				for p in planets:
 					if self.n == p.get_n():
 						unique = False
@@ -143,7 +143,8 @@ class Blackhole(Planet):
 			unique = False
 			while not unique:
 				unique = True
-				self.n = randint(Settings.MAX_PLANETS + 1, Settings.MAX_PLANETS + Settings.MAX_BLACKHOLES + 1)
+				self.n = randint(Settings.NUM_PLANET_SPRITES +
+                                        1, Settings.NUM_PLANET_SPRITES + Settings.MAX_BLACKHOLES + 1)
 				for p in planets:
 					if self.n == p.get_n():
 						unique = False

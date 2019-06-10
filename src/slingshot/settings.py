@@ -26,7 +26,7 @@ import os.path
 
 class Settings:
 
-        VERSION = '0.9'
+        VERSION = '0.9r1'
 
 	g = 120 # gravity
 	MAXPOWER = 350
@@ -52,6 +52,10 @@ class Settings:
 	MAX_FLIGHT = 750
 
 	MAX_PLANETS = 4
+        # MAX_PLANTES_SPRITES is the number of planet sprites, hence the maximal
+        # number for any Planet.n and we can identify BHs by haveing an n >
+        # NUM_PLANET_SPRITES
+        NUM_PLANET_SPRITES = 8
         MAX_BLACKHOLES = 0
 
 	HITSCORE = 1500

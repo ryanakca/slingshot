@@ -12,6 +12,9 @@ at http://github.com/ryanakca/slingshot
 
 See http://github.com/ryanakca/slingshot/commits/master for a detailed listing.
 
+v0.9r1:
+ - Fix bug in network games (disappearing planets)
+
 v0.9:
  - Fix deprecation Python warnings and errors
  - Introduce networking support
@@ -63,6 +66,7 @@ Copyright:
       Copyright (C) 2007 Bart Mak
       Copyright (C) 2009 Marcus Dreier <m-rei@gmx.net>
       Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
+      Copyright (C) 2019 H. A. L. <hans.liegener@fau.de> (contributions to v0.9r1)
     slingshot/data/FreeSansBold.ttf:
       Copyright (C) 2002, 2003, 2005, 2008 Free Software Foundation
 
