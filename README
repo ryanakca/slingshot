@@ -12,7 +12,7 @@ at http://github.com/ryanakca/slingshot
 
 See http://github.com/ryanakca/slingshot/commits/master for a detailed listing.
 
-v0.10:
+v0.10: (UNRELEASED)
  - Fixed Planets in Network game
  - Introduce command line options
  - Introduced option to change player names
