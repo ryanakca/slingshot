@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # Copyright (C) 2010 Ryan Kavanagh <ryanakca@kubuntu.org>
 #
 # Slingshot is free software; you can redistribute it and/or modify

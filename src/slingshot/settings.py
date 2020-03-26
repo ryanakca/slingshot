@@ -26,7 +26,7 @@ import os.path
 
 class Settings:
 
-        VERSION = '0.9'
+	VERSION = '0.9'
 
 	g = 120 # gravity
 	MAXPOWER = 350
@@ -52,7 +52,7 @@ class Settings:
 	MAX_FLIGHT = 750
 
 	MAX_PLANETS = 4
-        MAX_BLACKHOLES = 0
+	MAX_BLACKHOLES = 0
 
 	HITSCORE = 1500
 	SELFHIT = 2000
@@ -71,6 +71,6 @@ class Settings:
 
 	MAX_ROUNDS = 0
 
-        DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
+	DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
 
-        FULLSCREEN = False
+	FULLSCREEN = False

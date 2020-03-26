@@ -35,10 +35,10 @@ class Menu:
 		self.dim = dim
 		self.count = 0
 		self.inc = 15
-                self.copyright = copyright
+		self.copyright = copyright
 
 	def change_active(self, item, a):
-		for i in xrange(0, self.items.__len__()):
+		for i in range(0, self.items.__len__()):
 			if self.items[i][0] == item:
 				self.items[i] = (self.items[i][0], self.items[i][1], self.items[i][2], a)
 
@@ -100,8 +100,8 @@ class Menu:
 		result = pygame.Surface((w, h))
 		#result.fill((100,0,0))
 		result.blit(Settings.menu_background, (0,0))
-                if self.copyright:
-                        for line, (x, y) in prep_text([
+		if self.copyright:
+			for line, (x, y) in prep_text([
 "Slingshot is:",
 "    Copyright (C) 2007 Jonathan Musther <jmusther@gmail.com>",
 "    Copyright (C) 2007 Bart Mak",
@@ -123,14 +123,13 @@ class Menu:
 "Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA",
 "",
 "http://github.com/ryanakca/slingshot"],
-                                True, Settings.fineprint, 0, (10, 10, 10)):
-                            # We want our text to start at 20px from the left
-                            # side and 305 px from the top.
-                            result.blit(line, (20, 305 + y))
-                version = Settings.fineprint.render(
-                        'Version '+ Settings.VERSION, True,
-                                                    (230, 230, 230))
-                result.blit(version, (345 - version.get_width(), 3))
+					True, Settings.fineprint, 0, (10, 10, 10)):
+					# We want our text to start at 20px from the left
+					# side and 305 px from the top.
+					result.blit(line, (20, 305 + y))
+		version = Settings.fineprint.render(
+			'Version '+ Settings.VERSION, True, (230, 230, 230))
+		result.blit(version, (345 - version.get_width(), 3))
 
 		txt = Settings.menu_font.render(self.name, 1, (255,255,255))
 		rect = txt.get_rect()
@@ -138,7 +137,7 @@ class Menu:
 		result.blit(txt, rect.topleft)
 
 		n = self.items.__len__()
-		for i in xrange(0, n):
+		for i in range(0, n):
 			if i == self.selected:
 				color = (self.count,self.count,255)
 			else:
@@ -191,24 +190,23 @@ class Welcome(Menu):
 
 	def __init__(self):
 		Menu.__init__(self, "")
-                self.img = pygame.surface.Surface((600, 300), pygame.SRCALPHA)
+		self.img = pygame.surface.Surface((600, 300), pygame.SRCALPHA)
 		self.choice = ""
-                # header font
-                hfont = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 40)
-                header = prep_text(["Welcome to Slingshot!"], True, hfont,
-                                 0, (255, 255, 255))[0]
-                self.img.blit(header[0],
-                              ((self.img.get_width() - header[1][0]) / 2, 0)
-                             )
-                # Instructions font
-                ifont = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 15)
-                instructions = prep_text(
-                    ["Press space to play or escape for the menu and help!"],
-                    True, ifont, 0, (255, 255, 255))[0]
-                self.img.blit(instructions[0],
-                          ((self.img.get_width() - instructions[1][0]) / 2, 60)
-                             )
-                for line, (x, y) in prep_text([
+		# header font
+		hfont = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 40)
+		header = prep_text(["Welcome to Slingshot!"], True, hfont, 0, (255, 255, 255))[0]
+		self.img.blit(header[0],
+					  ((self.img.get_width() - header[1][0]) / 2, 0)
+					  )
+		# Instructions font
+		ifont = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 15)
+		instructions = prep_text(
+			["Press space to play or escape for the menu and help!"],
+			True, ifont, 0, (255, 255, 255))[0]
+		self.img.blit(instructions[0],
+					  ((self.img.get_width() - instructions[1][0]) / 2, 60)
+					  )
+		for line, (x, y) in prep_text([
 "Slingshot is:",
 "    Copyright (C) 2007 Jonathan Musther <jmusther@gmail.com>",
 "    Copyright (C) 2007 Bart Mak",
@@ -326,7 +324,7 @@ class Confirm(Menu):
 			rect.midtop = (w / 2, Settings.MENU_LINEFEED + offset)
 			result.blit(txt, rect.topleft)
 
-		for i in xrange(0, 2):
+		for i in range(0, 2):
 			if i == self.selected:
 				color = (self.count,self.count,255)
 			else:

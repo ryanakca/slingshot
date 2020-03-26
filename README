@@ -19,8 +19,8 @@ v0.9:
 
 --- Requirements ---
 
-python 2.4 (or higher)			http://www.python.org/
-python-pygame 1.7.1 (or higher)		http://www.pygame.org/
+python 3.0 (or higher)			http://www.python.org/
+python-pygame 1.9.2 (or higher)		http://www.pygame.org/
 
 
 --- Installation ---

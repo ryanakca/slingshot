@@ -30,12 +30,12 @@ import os.path
 from slingshot.settings import Settings
 
 def load_image(name, colorkey=None):
-        fullname = os.path.join(Settings.DATA_PATH, name)
+	fullname = os.path.join(Settings.DATA_PATH, name)
 	try:
 		image = pygame.image.load(fullname)
-	except pygame.error, message:
-		print 'Cannot load image:', fullname
-		raise SystemExit, message
+	except pygame.error as message:
+		print('Cannot load image:', fullname)
+		raise SystemExit(message)
 	image = image.convert_alpha()
 	if colorkey is not None:
 		if colorkey is -1:
@@ -87,7 +87,7 @@ def get_intersect(center, r, pos1, pos2):
 	return pos
 
 def get_data_path(file):
-        return os.path.join(Settings.DATA_PATH, file)
+	return os.path.join(Settings.DATA_PATH, file)
 
 def prep_text(text, antialias, font, linespacing, color):
         '''
