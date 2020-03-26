@@ -192,7 +192,7 @@ class Player(pygame.sprite.Sprite):
 
 	def update_explosion(self):
 		self.e = self.e + 1
-		s = self.e * (6 - self.e) * 100 / 9
+		s = self.e * (6 - self.e) * 100 // 9
 		if s >= 0:
 			self.image = pygame.transform.scale(self.exp, (s,s))
 			pos = self.rect.center
@@ -200,7 +200,7 @@ class Player(pygame.sprite.Sprite):
 			self.rect.center = pos
 
 	def draw_line(self, screen):
-                ''' Draws the aiming line out of the ship's gun. '''
+		''' Draws the aiming line out of the ship's gun. '''
 		(sx,sy) = self.get_launchpoint()
 
 		pygame.draw.aaline(screen, self.color, (sx,sy), (sx + self.power * math.sin(math.radians(self.angle)), sy - self.power * math.cos(math.radians(self.angle))))
@@ -218,10 +218,10 @@ class Player(pygame.sprite.Sprite):
 #			if img2 == 7:
 #				f = f - 8.0
 
-		print
-		print img1
-		print img2
-		print f
+		print()
+		print(img1)
+		print(img2)
+		print(f)
 
 		rect1 = pygame.Rect(img1 * 40, 0, 40, 33)
 		rect2 = pygame.Rect(img2 * 40, 0, 40, 33)

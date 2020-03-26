@@ -32,7 +32,7 @@ from random import randint
 class Particle(pygame.sprite.Sprite):
 
 	def __init__(self, pos = (0.0, 0.0), size = 10):
-                ''' Initialize the particle. '''
+		''' Initialize the particle. '''
 		pygame.sprite.Sprite.__init__(self)
 		if size == 5:
 			self.image = Settings.particle_image5
@@ -59,7 +59,7 @@ class Particle(pygame.sprite.Sprite):
 			return False
 
 	def update(self, planets):
-                """
+		"""
                 Updates information about ourselves, namely our location.
 
                 @param planets: list of planets
@@ -70,7 +70,7 @@ class Particle(pygame.sprite.Sprite):
                           1 otherwise
                 @rtype: int
 
-                """
+		"""
 		self.flight = self.flight - 1
 
 		self.last_pos = self.pos
@@ -78,20 +78,20 @@ class Particle(pygame.sprite.Sprite):
 		for p in planets:
 			p_pos = p.get_pos()
 			mass = p.get_mass()
-                        dx = self.pos[0] - p_pos[0]
-                        dy = self.pos[1] - p_pos[1]
+			dx = self.pos[0] - p_pos[0]
+			dy = self.pos[1] - p_pos[1]
 			d = dx**2 + dy**2
-                        # a is the acceleration in pixels/tick
-                        #  ->   [ G * m_p * \delta d_x     G * m_p * \delta d_y   ]
-                        #  a  = [ ---------------------- , ---------------------- ]
-                        #       [      r ^ (1/3)                 r ^ (1/3)        ]
-                        try:
-                            a = ((Settings.g * mass * dx) / (d * math.sqrt(d)), (Settings.g * mass * dy) / (d * math.sqrt(d)))
-                        except ZeroDivisionError:
-                            # Hackishly take any silly particles out of the game.
-                            a = (10000, 10000)
-                        # It's been a tick, update our velocity according to our
-                        # acceleration
+			# a is the acceleration in pixels/tick
+			#  ->   [ G * m_p * \delta d_x     G * m_p * \delta d_y   ]
+			#  a  = [ ---------------------- , ---------------------- ]
+			#       [      r ^ (1/3)                 r ^ (1/3)        ]
+			try:
+				a = ((Settings.g * mass * dx) / (d * math.sqrt(d)), (Settings.g * mass * dy) / (d * math.sqrt(d)))
+			except ZeroDivisionError:
+				# Hackishly take any silly particles out of the game.
+				a = (10000, 10000)
+			# It's been a tick, update our velocity according to our
+			# acceleration
 			self.v = (self.v[0] - a[0], self.v[1] - a[1])
 
 		self.pos = (self.pos[0] + self.v[0], self.pos[1] + self.v[1])
@@ -102,19 +102,19 @@ class Particle(pygame.sprite.Sprite):
 		for p in planets:
 			p_pos = p.get_pos()
 			r = p.get_radius()
-                        # d is not the distance from the planet, it's the distance squared.
+			# d is not the distance from the planet, it's the distance squared.
 			d = (self.pos[0] - p_pos[0])**2 + (self.pos[1] - p_pos[1])**2
-                        if p.type == "Blackhole":
-                                min_dist = p.get_mass()
-                                if d <= min_dist:
-                                        self.impact_pos = p_pos
-                                        self.pos = self.impact_pos
-                                        return -1
-                        elif d <= (r)**2:
-                                # This is a planet
-                                self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
-                                self.pos = self.impact_pos
-                                return 0
+			if p.type == "Blackhole":
+				min_dist = p.get_mass()
+				if d <= min_dist:
+					self.impact_pos = p_pos
+					self.pos = self.impact_pos
+					return -1
+			elif d <= (r)**2:
+				# This is a planet
+				self.impact_pos = get_intersect(p_pos, r, self.last_pos, self.pos)
+				self.pos = self.impact_pos
+				return 0
 
 		if Settings.BOUNCE:
 			if self.pos[0] > 799:
@@ -146,10 +146,10 @@ class Particle(pygame.sprite.Sprite):
 			return False
 
 	def visible(self):
-                """
-                Returns whether or not the particle is within the playing area.
+		"""
+		Returns whether or not the particle is within the playing area.
 
-                """
+		"""
 		if pygame.Rect(0, 0, 800, 600).collidepoint(self.pos):
 			return True
 		else:
@@ -186,7 +186,7 @@ class Missile(Particle):
 	def update_players(self, players):
 		result = 1
 
-		for i in xrange(10):
+		for i in range(10):
 			pos = (self.last_pos[0] + i * 0.1 * self.v[0], self.last_pos[1] + i * 0.1 * self.v[1])
 			if players[1].hit(pos):
 				result = 0
@@ -215,9 +215,9 @@ class Missile(Particle):
 	def update(self, planets, players):
 		result = Particle.update(self, planets)
 		result = result * self.update_players(players)
-                # Draws the missile's trajectory only if we haven't entered a black hole.
-                if result != -1:
-                        pygame.draw.aaline(self.trail_screen, self.trail_color, self.last_pos, self.pos)
+		# Draws the missile's trajectory only if we haven't entered a black hole.
+		if result != -1:
+			pygame.draw.aaline(self.trail_screen, self.trail_color, self.last_pos, self.pos)
 		return result
 
 	def get_image(self):
