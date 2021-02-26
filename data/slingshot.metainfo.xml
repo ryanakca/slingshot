@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>slingshot</id>
+  <launchable type="desktop-id">slingshot.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-or-later</project_license>
+  <name>Slingshot</name>
+  <summary>2D space shooting game with gravity for 2 players</summary>
+  <description>
+      <p>
+          Slingshot is a two dimensional, turn based simulation-strategy game set in the gravity fields of several planets. It is a highly addictive game, and never the same from round to round due to its randomly generated playing fields.
+      </p>
+      <p>
+          It is a deceptively simple game, the goal is to shoot the other spacecraft through the field of planets, but their gravity makes it tricky. The effects of the gravity mean that although it's easy to learn how to play, and to enjoy playing, it could take a lifetime to thoroughly master.
+      </p>
+      <p>
+          In order to hit your opponent, you can rotate you ship to aim in any direction, and you can change the power with which your projectile is launched - the initial speed at which it flies.
+      </p>
+      <p>
+          Slingshot is free software as defined by the Free Software Foundation, it is released under the GNU General Public License. This means you are free to download, copy, modify, redistribute, disassemble, analyse or sell Slingshot under the terms of the aforementioned license. Enjoy!
+      </p>
+  </description>
+  <categories>
+    <category>Game</category>
+    <category>StrategyGame</category>
+  </categories>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://repo.openpandora.org/files/pnd/slingshot-slingshot-19049/previews/slingshot-ingame1.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://repo.openpandora.org/files/pnd/slingshot-slingshot-19049/previews/slingshot-ingame2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://repo.openpandora.org/files/pnd/slingshot-slingshot-19049/previews/slingshot-ingame3.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://repo.openpandora.org/files/pnd/slingshot-slingshot-19049/previews/slingshot-menu.png</image>
+    </screenshot>
+  </screenshots>
+  <provides>
+    <binary>slingshot</binary>
+    <python3>slingshot</python3>
+  </provides>
+  <recommends>
+    <control>keyboard</control>
+  </recommends>
+  <content_rating type="oars-1.1"/>
+  <url type="homepage">https://github.com/ryanakca/slingshot</url>
+  <url type="bugtracker">https://github.com/ryanakca/slingshot/issues</url>
+  <developer_name>Ryan Kavanagh</developer_name>
+  <releases>
+    <release date="2011-10-22" version="0.9"/>
+  </releases>
+</component>
