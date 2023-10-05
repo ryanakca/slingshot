@@ -31,30 +31,30 @@ from slingshot.settings import *
 from slingshot.general import *
 
 class Planet(pygame.sprite.Sprite):
-        """ A planet sprite """
+	""" A planet sprite """
 
 	def __init__(self, planets, background, n=None, radius=None, mass=None, pos=None):
-                """
-                Initialize a Planet.
+		"""
+		Initialize a Planet.
 
-                @param planets: list of Planets
-                @type planets: list
-                @param background: ?
-                @param n: planet number
-                @type n: int
-                @param radius: the radius of this planet
-                @type radius: float
-                @param mass: mass of this planet
-                @type mass: float
-                @param pos: (x, y) position
-                @type pos: tuple(float, float)
+		@param planets: list of Planets
+		@type planets: list
+		@param background: ?
+		@param n: planet number
+		@type n: int
+		@param radius: the radius of this planet
+		@type radius: float
+		@param mass: mass of this planet
+		@type mass: float
+		@param pos: (x, y) position
+		@type pos: tuple(float, float)
 
-                @return: none
+		@return: none
 
-                """
+		"""
 		pygame.sprite.Sprite.__init__(self)
 
-                self.type = "Planet"
+		self.type = "Planet"
 
 		if n == None and planets != None:
 			unique = False
@@ -75,8 +75,8 @@ class Planet(pygame.sprite.Sprite):
 			positioned = False
 			while not positioned:
 				self.mass = randint(8,512)
-                                # radius is between 25 and 100 when mass is
-                                # between 8 and 512
+				# radius is between 25 and 100 when mass is
+				# between 8 and 512
 				self.r = self.mass**(1.0/3.0) * 12.5
 				self.pos = (randint(Settings.PLANET_SHIP_DISTANCE + round(self.r), 800 - Settings.PLANET_SHIP_DISTANCE - round(self.r)), randint(Settings.PLANET_EDGE_DISTANCE + round(self.r), 600 - Settings.PLANET_EDGE_DISTANCE - round(self.r)))
 				positioned = True
@@ -129,15 +129,15 @@ class Planet(pygame.sprite.Sprite):
 #				self.image.set_at((randint(0, round(self.r * 2)), randint(0, round(self.r * 2))), (0,0,0,0))
 
 class Blackhole(Planet):
-        def __init__(self, planets, background, n=None, radius=None, mass=None, pos=None):
+	def __init__(self, planets, background, n=None, radius=None, mass=None, pos=None):
 		pygame.sprite.Sprite.__init__(self)
 
-                self.type = "Blackhole"
+		self.type = "Blackhole"
 
-                self.image = pygame.surface.Surface((2, 2))
-                self.image.fill((0,0,0))
-                self.image.set_alpha(0)
-                self.rect = self.image.get_rect()
+		self.image = pygame.surface.Surface((2, 2))
+		self.image.fill((0,0,0))
+		self.image.set_alpha(0)
+		self.rect = self.image.get_rect()
 
 		if n == None and planets != None:
 			unique = False
@@ -153,22 +153,22 @@ class Blackhole(Planet):
 		if radius == None or mass == None or pos == None:
 			positioned = False
 			while not positioned:
-                                # We can't accurately represent blackholes in
-                                # this game. According to my (feeble)
-                                # understanding of the Schwarzschild radius, to
-                                # have a radius of 1m and be a black hole, we'd
-                                # have to have a mass of 6.73*10^26kg. At least
-                                # 600 is still 6 times larger than the size of
-                                # our largest planet.
+				# We can't accurately represent blackholes in
+				# this game. According to my (feeble)
+				# understanding of the Schwarzschild radius, to
+				# have a radius of 1m and be a black hole, we'd
+				# have to have a mass of 6.73*10^26kg. At least
+				# 600 is still 6 times larger than the size of
+				# our largest planet.
 				self.mass = randint(600, 700)
 				self.r = 1 # radius
-                                # Slightly more distance from the sides than
-                                # planets because of our massive gravit.
-                                # field.
+				# Slightly more distance from the sides than
+				# planets because of our massive gravit.
+				# field.
 				self.pos = (randint(3 * Settings.PLANET_SHIP_DISTANCE + round(self.r),
-                                                    800 - 3 * Settings.PLANET_SHIP_DISTANCE - round(self.r)),
-                                            randint(3 * Settings.PLANET_EDGE_DISTANCE + round(self.r),
-                                                    600 - 3 * Settings.PLANET_EDGE_DISTANCE - round(self.r)))
+							800 - 3 * Settings.PLANET_SHIP_DISTANCE - round(self.r)),
+							randint(3 * Settings.PLANET_EDGE_DISTANCE + round(self.r),
+							600 - 3 * Settings.PLANET_EDGE_DISTANCE - round(self.r)))
 				positioned = True
 				for p in planets:
 					d = math.sqrt((self.pos[0] - p.get_pos()[0])**2 + (self.pos[1] - p.get_pos()[1])**2)
@@ -179,10 +179,10 @@ class Blackhole(Planet):
 			self.r = radius
 			self.pos = pos
 
-                self.orig = self.image
-                self.rect = self.orig.get_rect()
+		self.orig = self.image
+		self.rect = self.orig.get_rect()
 		self.rect.center = self.pos
 
-        def fade(self, f):
-                """ Don't mess with our alpha, we're invilible! """
-                pass
+	def fade(self, f):
+		""" Don't mess with our alpha, we're invilible! """
+		pass

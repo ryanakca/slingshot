@@ -40,7 +40,7 @@ It was later extended in 2009 by Marcus Dreier <m-rei@gmx.net>. He:
  - Added network support
  - Fixed crashing when pressing cursors at welcome and help screen
  - Added fine adjustments for all keyboard bindings (shift, ctrl, alt)
- - Replaced the deprecated range function with xrange
+ - Replaced the deprecated range function with range
  - Removed some of pygame's deprecation warnings
  - Switched to a more consistent code format
 

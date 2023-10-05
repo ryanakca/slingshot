@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!python
 #    This file is part of Slingshot.
 #
 # Slingshot is a two-dimensional strategy game where two players attempt to shoot one
@@ -36,11 +36,14 @@ from pygame.locals import *
 import math
 import os
 import sys
+import logging
 import time
-import thread
+import _thread as thread
 
 from random import randint
 
+# Adjust import paths to include the 'slingshot' package from the 'src' directory
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # Add 'src' directory to the sys.path
 from slingshot.settings import *
 from slingshot.general import *
 from slingshot.player import *
@@ -65,7 +68,7 @@ class Game:
     Settings.font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 14)
     Settings.menu_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), Settings.MENU_FONT_SIZE)
     Settings.round_font = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 100)
-    Settings.fineprint = pygame.font.Font(get_data_path("FreeSansBold.ttf"), 8)
+    Settings.fineprint= pygame.font.Font(get_data_path("FreeSansBold.ttf"), 8)
 
     def __init__(self):
         pygame.display.init()
@@ -352,7 +355,7 @@ class Game:
                 nn = n / 2
             else:
                 nn = n
-            for i in xrange(nn):
+            for i in range(nn):
                 self.particlesystem.add(Particle(pos, size))
 
     def create_planets(self, planetlist=None):
@@ -361,13 +364,13 @@ class Game:
         if planetlist is None:
             if Settings.MAX_BLACKHOLES > 0:
                 n = randint(1, Settings.MAX_BLACKHOLES)
-                for i in xrange(n):
+                for i in range(n):
                     result.add(Blackhole(result, self.background))
             else:
                 # Only have planets if we don't have any
                 # blackholes.
                 n = randint(2, Settings.MAX_PLANETS)
-                for i in xrange(n):
+                for i in range(n):
                     result.add(Planet(result, self.background))
         else:
             for p in planetlist:
@@ -448,13 +451,13 @@ class Game:
         self.playersprites.draw(self.screen)
 #       self.players[1].draw(self.screen)
 #       self.players[2].draw(self.screen)
-#       print self.particlesystem
+#       print(self.particlesystem)
         if Settings.PARTICLES:
             self.particlesystem.draw(self.screen)
         if self.firing:
             if self.missile.visible():
                 self.missilesprite.draw(self.screen)
-#       print self.planetsprites
+#       print(self.planetsprites)
         if self.firing:
             if not self.missile.visible():
                 self.draw_zoom()
@@ -533,12 +536,12 @@ class Game:
     def update_particles(self):
         if Settings.PARTICLES:
             for p in self.particlesystem:
-    #           print p.get_pos()
+    #           print(p.get_pos())
                 if p.update(self.planetsprites) == 0 or p.flight < 0:
                     if p.flight >= 0 and p.in_range():
                         if p.get_size() == 10:
                             self.create_particlesystem(p.get_impact_pos(), Settings.n_PARTICLES_5, 5)
-    #               print "removing: ", p.get_pos()
+    #               print("removing: ", p.get_pos())
                     self.particlesystem.remove(p)
                 if p.flight > Settings.MAX_FLIGHT:
                     self.particlesystem.remove(p)
@@ -698,7 +701,7 @@ class Game:
             offset1 = 0
 
         power_penalty = self.missile.get_score()
-        for i in xrange(1, 3):
+        for i in range(1, 3):
             if self.players[i].shot:
                 if self.player == 3 - i:
                     message = "Player %d killed self" % (i)
@@ -820,7 +823,7 @@ class Game:
     def run(self):
         while not self.q:
             self.clock.tick(Settings.FPS)
-#           print clock.get_fps()
+#           print(clock.get_fps())
 
             for event in self.event_check():
                 if event.type == QUIT:
@@ -1107,11 +1110,15 @@ def main():
     path = os.path.expanduser("~") + "/.slingshot"
     if not os.path.exists(path):
         os.mkdir(path)
-    path += "/logfile.txt"
-    sys.stderr = open(path, "w")
-    sys.stdout = sys.stderr
+    log_file_path = os.path.join(path, "logfile.txt")
+    logging.basicConfig(filename=log_file_path, level=logging.DEBUG)
+
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
+
     game = Game()
     game.run()
+
 
 
 if __name__ == '__main__':

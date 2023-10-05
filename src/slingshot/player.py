@@ -104,7 +104,7 @@ class Player(pygame.sprite.Sprite):
 #			self.rect = self.image.get_rect(center = center)
 
 		center = self.rect.center
-		#print "center0: (%d,%d)" %(self.rect.center[0], self.rect.center[1])
+		#print("center0: (%d,%d)" %(self.rect.center[0], self.rect.center[1]))
 
 		img1 = round((self.rel_rot + 22.5) / 45 - 0.49) % 8
 		img2 = round(self.rel_rot / 45 - 0.49) % 8
@@ -134,9 +134,9 @@ class Player(pygame.sprite.Sprite):
 #		self.image = pygame.transform.rotate(image1, -self.rel_rot)
 		self.image = pygame.transform.rotozoom(image1, -self.rel_rot, 1.0)
 		self.rect = self.image.get_rect()
-		#print "center1: (%d,%d)" %(self.rect.center[0], self.rect.center[1])
+		#print("center1: (%d,%d)" %(self.rect.center[0], self.rect.center[1]))
 		self.rect.center = center
-		#print "center2: (%d,%d)" %(self.rect.center[0], self.rect.center[1])
+		#print("center2: (%d,%d)" %(self.rect.center[0], self.rect.center[1]))
 
 
 	def change_power(self, p):
@@ -200,7 +200,7 @@ class Player(pygame.sprite.Sprite):
 			self.rect.center = pos
 
 	def draw_line(self, screen):
-                ''' Draws the aiming line out of the ship's gun. '''
+		''' Draws the aiming line out of the ship's gun. '''
 		(sx,sy) = self.get_launchpoint()
 
 		pygame.draw.aaline(screen, self.color, (sx,sy), (sx + self.power * math.sin(math.radians(self.angle)), sy - self.power * math.cos(math.radians(self.angle))))
@@ -219,9 +219,9 @@ class Player(pygame.sprite.Sprite):
 #				f = f - 8.0
 
 		print
-		print img1
-		print img2
-		print f
+		print(img1)
+		print(img2)
+		print(f)
 
 		rect1 = pygame.Rect(img1 * 40, 0, 40, 33)
 		rect2 = pygame.Rect(img2 * 40, 0, 40, 33)

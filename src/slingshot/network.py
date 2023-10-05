@@ -42,7 +42,7 @@ class Network:
 				af, socktype, proto, canonname, sa = res
 				try:
 					connect_s = socket.socket(af, socktype, proto)
-				except socket.error, msg:
+				except socket.error as msg:
 					connect_s = None
 					continue
 				try:
@@ -50,12 +50,12 @@ class Network:
 					connect_s.bind(sa)
 					connect_s.listen(1)
 					connect_s.settimeout(2)
-				except socket.error, msg:
+				except socket.error as msg:
 					connect_s.close()
 					connect_s = None
 					continue
 				break
-		except socket.error, msg:
+		except socket.error as msg:
 			connect_s = None
 
 		if connect_s is None:
@@ -77,18 +77,18 @@ class Network:
 				af, socktype, proto, canonname, sa = res
 				try:
 					self.s = socket.socket(af, socktype, proto)
-				except socket.error, msg:
+				except socket.error as msg:
 					self.s = None
 					continue
 				try:
 					self.s.settimeout(3)
 					self.s.connect(sa)
-				except socket.error, msg:
+				except socket.error as msg:
 					self.s.close()
 					self.s = None
 					continue
 				break
-		except socket.error, msg:
+		except socket.error as msg:
 			self.s = None
 
 		if self.s is None:
@@ -110,7 +110,7 @@ class Network:
 	def recv(self):
 		try:
 			data = pickle.load(self.r_stream)
-#            print(data)
+#	    print(data)
 			return data
 		except:
 			return False

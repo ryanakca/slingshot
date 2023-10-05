@@ -1,4 +1,4 @@
-#    This file is part of Slingshot.
+#	This file is part of Slingshot.
 #
 # Slingshot is a two-dimensional strategy game where two players attempt to shoot one
 # another through a section of space populated by planets.  The main feature of the
@@ -26,7 +26,7 @@ import os.path
 
 class Settings:
 
-        VERSION = '0.9'
+	VERSION = '0.9'
 
 	g = 120 # gravity
 	MAXPOWER = 350
@@ -39,7 +39,7 @@ class Settings:
 	PARTICLE_10_MAXSPEED = 250 # 250 easy, 400-500 wild
 	n_PARTICLES_5 = 20  # number of small particles originating from a big one
 	n_PARTICLES_10 = 30 # number of big particles originating from explosion
-		# if both are too high, the game stalls on impact
+	# if both are too high, the game stalls on impact
 
 	ROTATE = True
 	BOUNCE = False
@@ -52,7 +52,7 @@ class Settings:
 	MAX_FLIGHT = 750
 
 	MAX_PLANETS = 4
-        MAX_BLACKHOLES = 0
+	MAX_BLACKHOLES = 0
 
 	HITSCORE = 1500
 	SELFHIT = 2000
@@ -71,6 +71,6 @@ class Settings:
 
 	MAX_ROUNDS = 0
 
-        DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
+	DATA_PATH = os.path.join(os.path.dirname(__file__), 'data/')
 
-        FULLSCREEN = False
+	FULLSCREEN = False
